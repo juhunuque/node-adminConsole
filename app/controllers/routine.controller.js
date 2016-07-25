@@ -1,8 +1,7 @@
 "use strict";
-var Model = require('./../models/user.model');
+var Model = require('./../models/routine.model');
 var CustomError = require('./../utils/custom-error');
 var mongoose = require('mongoose');
-
 
 // Get All
 function getAll(req, res, next){
@@ -30,7 +29,7 @@ function getOneById(req, res, next){
 // Create new object
 function createObject(req, res, next){
   const newObject = new Model({
-    nameUser: req.body.nameUser
+    nameRoutine: req.body.nameRoutine
   });
 
   Model.createObject(newObject, (err, object)=>{
@@ -52,7 +51,7 @@ function removeObject(req, res, next){
 // Update object
 function updateObject(req, res, next){
   const data = {
-    nameUser: req.body.nameUser
+    nameRoutine: req.body.nameRoutine
   };
 
   Model.updateObject(req.params.id, data, (err, object)=>{

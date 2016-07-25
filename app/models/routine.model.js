@@ -35,7 +35,7 @@ module.exports.updateObject = function(id, data, callback){
     if(!obj){
       return next(new Error("Could not load Routine to update"))
     }else{
-      obj.nameRoutine = data.nameActivity;
+      obj.nameRoutine = data.nameRoutine;
 
       obj.save(callback);
     }
