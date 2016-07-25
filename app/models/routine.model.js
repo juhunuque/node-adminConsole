@@ -7,7 +7,7 @@ var routineSchema = mongoose.Schema({
   }
 });
 
-var Routine = module.exports = mongoose.model('Routine', userSchema);
+var Routine = module.exports = mongoose.model('Routine', routineSchema);
 
 //Get All
 module.exports.getAll = function(callback){

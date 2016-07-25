@@ -7,7 +7,7 @@ var activitySchema = mongoose.Schema({
   }
 });
 
-var Activity = module.exports = mongoose.model('Activity', userSchema);
+var Activity = module.exports = mongoose.model('Activity', activitySchema);
 
 //Get All
 module.exports.getAll = function(callback){

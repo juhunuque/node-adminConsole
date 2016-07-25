@@ -34,12 +34,6 @@ var users = require('./routes/users');
 
 var app = express();
 
-// Swagger
-var swagger = require('jsdoc-express-with-swagger');
-var swaggerConfig = require('./app/config/swagger.json');
-swagger.init(app, swaggerConfig);
-// End Swagger
-
 // Log Structure
 var logDirectory = path.join(__dirname, 'log');
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
@@ -70,11 +64,16 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/v1', routes);
-app.use('/v1/activity', activities);
-app.use('/v1/routine', routines);
+app.use('/v1/activities', activities);
+app.use('/v1/routines', routines);
 app.use('/v1/users', users);
 
 // Swagger Route
+const swaggerApi = require('./app/config/swaggerApi.json');
+app.get('/api', function (req, res) {
+   res.json(swaggerApi);
+});
+
 app.use(express.static(path.join(__dirname, 'swagger')));
 app.get('/apiDocs', function (req, res) {
    res.sendFile(path.join(__dirname, './swagger', 'index.html'));
