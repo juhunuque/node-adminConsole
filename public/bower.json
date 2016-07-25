@@ -1,0 +1,24 @@
+{
+  "name": "node_adminConsole",
+  "homepage": "https://github.com/juhunuque/node-adminConsole",
+  "authors": [
+    "Julio N <juhunuque@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "angular": "~1.4.9",
+    "angular-animate": "~1.5.0",
+    "angular-css": "~1.0.7",
+    "angular-route": "~1.4.9",
+    "angular-toastr": "~1.7.0",
+    "material-design-lite": "^1.1.3"
+  }
+}

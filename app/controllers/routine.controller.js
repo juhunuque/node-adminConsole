@@ -26,10 +26,27 @@ function getOneById(req, res, next){
   });
 };
 
+// // Create new object
+// function createObject(req, res, next){
+//   const newObject = new Model({
+//     nameRoutine: req.body.nameRoutine
+//   });
+//
+//   Model.createObject(newObject, (err, object)=>{
+//     if(err){return next(err);}
+//
+//     res.status(200).json(object);
+//   });
+// };
+
 // Create new object
 function createObject(req, res, next){
   const newObject = new Model({
-    nameRoutine: req.body.nameRoutine
+    title: req.body.title,
+    postedBy: req.body.postedBy,
+    comments:[{
+      postedBy: req.body.postedBy
+    }]
   });
 
   Model.createObject(newObject, (err, object)=>{
