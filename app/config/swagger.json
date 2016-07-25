@@ -13,7 +13,7 @@
     "host":"http://localhost",
     "basePath": "/v1",
     "apiPath": "/api",
-    "apiFiles": ["./routes/index.js"],
+    "apiFiles": ["./routes/index.js","./routes/users.js"],
     "consumes":"application/json",
     "produces":"application/json",
     "tags":[
@@ -31,24 +31,19 @@
       }
     ],
     "definitions":{
-      "Pet":{
+      "User":{
         "type":"object",
         "required":[
-          "name",
-          "photoUrls"
+          "nameUser"
         ],
         "properties":{
           "id":{
             "type":"integer",
             "format":"int64"
           },
-          "name":{
-            "type":"string",
-            "example":"doggie"
+          "nameUser":{
+            "type":"string"
           }
-        },
-        "xml":{
-          "name":"Pet"
         }
       }
     }

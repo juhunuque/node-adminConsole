@@ -19,7 +19,7 @@ module.exports.getById = function(id, callback){
   User.findById(id, callback);
 };
 
-//Add Object
+// //Add Object
 module.exports.createObject = function(newObject, callback){
   newObject.save(callback);
 };
