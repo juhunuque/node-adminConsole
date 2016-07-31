@@ -107,7 +107,6 @@ if(app.get('env') === 'development'){
   app.use(logger('common',{
     stream:{
       write: function(str){
-        console.log(str);
         winston.info(str);
       }
     }
