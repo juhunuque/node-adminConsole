@@ -4,7 +4,8 @@
   "private": true,
   "author": "Julio Nunez Q",
   "scripts": {
-    "start": "supervisor ./bin/www",
+    "start": "node ./bin/www",
+    "startHA": "supervisor ./bin/www",
     "test": "mocha test"
   },
   "dependencies": {
