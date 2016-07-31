@@ -8,6 +8,8 @@ router.get('/', controller.getAll);
 
 router.get('/:id', controller.getOneById);
 
+router.get('/byEmail/:email', controller.getOneByEmail);
+
 router.post('/', controller.createObject);
 
 router.delete('/:id', controller.removeObject);

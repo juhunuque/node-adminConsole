@@ -1,10 +1,23 @@
 var mongoose = require('mongoose');
 
+
 var activitySchema = mongoose.Schema({
-  nameActivity:{
+  nombreActividad:{
     type: String,
     required: true,
-    unique: true
+    default: ""
+  },
+  detalle:{
+    type: String,
+  },
+  duracion:{
+    type: Number
+  },
+  repeticiones:{
+    type: Number
+  },
+  peso:{
+    type: Number
   }
 });
 
@@ -36,7 +49,11 @@ module.exports.updateObject = function(id, data, callback){
     if(!obj){
       return next(new Error("Could not load Activity to update"))
     }else{
-      obj.nameActivity = data.nameActivity;
+      obj.nombreActividad = data.nombreActividad;
+      obj.detalle = data.detalle;
+      obj.duracion = data.duracion;
+      obj.repeticiones = data.repeticiones;
+      obj.peso = data.peso;
 
       obj.save(callback);
     }

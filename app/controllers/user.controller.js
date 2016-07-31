@@ -27,13 +27,29 @@ function getOneById(req, res, next){
   });
 };
 
+// Get single object by Email
+function getOneByEmail(req, res, next){
+  Model.getByEmail(req.params.email,(err, object)=>{
+    if(err){return next(err);}
+    if(!object){return next(new CustomError('No data found', 400));}
+
+    res.status(200).json(object);
+  });
+};
+
 // Create new object
 function createObject(req, res, next){
   const newObject = new Model({
-    nameUser: req.body.nameUser
+    nombre: req.body.nombre,
+    apellidos: req.body.apellidos,
+    correo: req.body.correo,
+    fechaNacimiento: req.body.fechaNacimiento,
+    genero: req.body.genero,
+    foto: req.body.foto,
+    rutinas: req.body.rutinas
   });
 
-  Model.createObject(newObject, (err, object)=>{
+  Model.createObject(newObject, next, (err, object)=>{
     if(err){return next(err);}
 
     res.status(200).json(object);
@@ -52,10 +68,16 @@ function removeObject(req, res, next){
 // Update object
 function updateObject(req, res, next){
   const data = {
-    nameUser: req.body.nameUser
+    nombre: req.body.nombre,
+    apellidos: req.body.apellidos,
+    correo: req.body.correo,
+    fechaNacimiento: req.body.fechaNacimiento,
+    genero: req.body.genero,
+    foto: req.body.foto,
+    rutinas: req.body.rutinas
   };
 
-  Model.updateObject(req.params.id, data, (err, object)=>{
+  Model.updateObject(req.params.id, data, next, (err, object)=>{
     if(err){return next(err);}
 
     res.status(200).json(object);
@@ -65,6 +87,7 @@ function updateObject(req, res, next){
 module.exports = {
     getAll: getAll,
     getOneById: getOneById,
+    getOneByEmail:getOneByEmail,
     createObject: createObject,
     removeObject: removeObject,
     updateObject: updateObject

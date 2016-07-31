@@ -29,7 +29,11 @@ function getOneById(req, res, next){
 // Create new object
 function createObject(req, res, next){
   const newObject = new Model({
-    nameActivity: req.body.nameActivity
+    nombreActividad: req.body.nombreActividad,
+    detalle: req.body.detalle,
+    duracion: req.body.duracion,
+    repeticiones: req.body.repeticiones,
+    peso: req.body.peso
   });
 
   Model.createObject(newObject, (err, object)=>{
@@ -51,7 +55,11 @@ function removeObject(req, res, next){
 // Update object
 function updateObject(req, res, next){
   const data = {
-    nameActivity: req.body.nameActivity
+    nombreActividad: req.body.nombreActividad,
+    detalle: req.body.detalle,
+    duracion: req.body.duracion,
+    repeticiones: req.body.repeticiones,
+    peso: req.body.peso
   };
 
   Model.updateObject(req.params.id, data, (err, object)=>{

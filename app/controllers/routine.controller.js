@@ -26,30 +26,23 @@ function getOneById(req, res, next){
   });
 };
 
-// // Create new object
-// function createObject(req, res, next){
-//   const newObject = new Model({
-//     nameRoutine: req.body.nameRoutine
-//   });
-//
-//   Model.createObject(newObject, (err, object)=>{
-//     if(err){return next(err);}
-//
-//     res.status(200).json(object);
-//   });
-// };
-
 // Create new object
 function createObject(req, res, next){
   const newObject = new Model({
-    title: req.body.title,
-    postedBy: req.body.postedBy,
-    comments:[{
-      postedBy: req.body.postedBy
-    }]
+    nombreRutina: req.body.nombreRutina,
+    rondas: req.body.rondas,
+    detalle: req.body.detalle,
+    tiempoTotal: req.body.tiempoTotal,
+    tiempoEntreActividades: req.body.tiempoEntreActividades,
+    tiempoEntreRondas: req.body.tiempoEntreRondas,
+    reqTiempo: req.body.reqTiempo,
+    reqPeso: req.body.reqPeso,
+    reqCant: req.body.reqCant,
+    tema: req.body.tema,
+    actividades: req.body.actividades
   });
 
-  Model.createObject(newObject, (err, object)=>{
+  Model.createObject(newObject, next, (err, object)=>{
     if(err){return next(err);}
 
     res.status(200).json(object);
@@ -68,10 +61,20 @@ function removeObject(req, res, next){
 // Update object
 function updateObject(req, res, next){
   const data = {
-    nameRoutine: req.body.nameRoutine
+    nombreRutina: req.body.nombreRutina,
+    rondas: req.body.rondas,
+    detalle: req.body.detalle,
+    tiempoTotal: req.body.tiempoTotal,
+    tiempoEntreActividades: req.body.tiempoEntreActividades,
+    tiempoEntreRondas: req.body.tiempoEntreRondas,
+    reqTiempo: req.body.reqTiempo,
+    reqPeso: req.body.reqPeso,
+    reqCant: req.body.reqCant,
+    tema: req.body.tema,
+    actividades: req.body.actividades
   };
 
-  Model.updateObject(req.params.id, data, (err, object)=>{
+  Model.updateObject(req.params.id, data, next, (err, object)=>{
     if(err){return next(err);}
 
     res.status(200).json(object);

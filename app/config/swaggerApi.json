@@ -208,6 +208,48 @@
                 }
             }
         },
+        "/v1/users/byEmail/{email}":{
+          "get": {
+              "tags": [
+                  "user"
+              ],
+              "summary": "Get a single User",
+              "operationId": "userGetByEmail",
+              "description": "Returns an user object",
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                  {
+                      "name": "email",
+                      "in": "path",
+                      "description": "EMAIL of user to return",
+                      "required": true,
+                      "type": "string"
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "Successful operation",
+                      "schema": {
+                          "$ref": "#/definitions/User"
+                      }
+                  },
+                  "400": {
+                      "description": "Bad Request",
+                      "schema": {
+                          "$ref": "#/definitions/Error"
+                      }
+                  },
+                  "500": {
+                      "description": "Server error",
+                      "schema": {
+                          "$ref": "#/definitions/Error"
+                      }
+                  }
+              }
+          }
+        },
         "/v1/activities": {
             "get": {
                 "tags": [
@@ -607,21 +649,40 @@
         "User": {
             "type": "object",
             "required": [
-                "nameUser"
+                "nombre","correo"
             ],
             "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "nameUser": {
+                "nombre": {
                     "type": "string",
-                    "description": "User name",
-                    "example": "John"
+                    "example": "Example"
+                },
+                "apellidos": {
+                    "type": "string",
+                    "example": "Example"
+                },
+                "correo": {
+                    "type": "string",
+                    "example": "Example"
+                },
+                "fechaNacimiento": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example":"Example"
+                },
+                "genero": {
+                    "type": "string",
+                    "example": "Example"
+                },
+                "foto": {
+                    "type": "string",
+                    "example": "Example"
+                },
+                "rutinas": {
+                    "type": "array",
+                    "items": {
+                      "$ref":"#/definitions/Routine"
+                    }
                 }
-            },
-            "xml": {
-                "name": "User"
             }
         },
         "Error": {
@@ -636,34 +697,82 @@
         "Activity": {
             "type": "object",
             "required": [
-                "nameActivity"
+                "nombreActividad"
             ],
             "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int64"
+                "nombreActividad": {
+                    "type": "string",
+                    "example": "Example"
                 },
-                "nameActivity": {
-                    "type": "integer",
-                    "description": "Activity name",
-                    "example": "Jump"
+                "detalle":{
+                  "type":"string",
+                  "example": "Example"
+                },
+                "duracion":{
+                  "type":"integer",
+                  "example": 0
+                },
+                "repeticiones":{
+                  "type":"integer",
+                  "example": 0
+                },
+                "peso":{
+                  "type":"integer",
+                  "example": 0
                 }
             }
         },
         "Routine": {
             "type": "object",
             "required": [
-                "nameRoutine"
+                "nombreRutina"
             ],
             "properties": {
-                "id": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "nameRoutine": {
+                "nombreRutina": {
                     "type": "string",
-                    "description": "Routine name",
-                    "example": "Insanity"
+                    "example": "Example"
+                },
+                "rondas": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "detalle": {
+                    "type": "string",
+                    "example": "Example"
+                },
+                "tiempoTotal": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "tiempoEntreActividades": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "tiempoEntreRondas": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "reqTiempo": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "reqPeso": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "reqCant": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "tema": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "actividades": {
+                    "type": "array",
+                    "items": {
+                      "$ref":"#/definitions/Activity"
+                    }
                 }
             }
         }

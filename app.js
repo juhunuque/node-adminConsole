@@ -48,7 +48,7 @@ var accessLogStream = FileStreamRotator.getStream({
 if(app.get('env') === 'development'){
   app.use(logger('dev'));
 }else{
-  app.use(logger('common',{stream: accessLogStream}));
+  app.use(logger('combined',{stream: accessLogStream}));
 }
 // End Log Structure
 
