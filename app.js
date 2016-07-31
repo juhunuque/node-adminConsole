@@ -5,6 +5,7 @@ var FileStreamRotator = require('file-stream-rotator')
 var fs = require('fs')
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var winston = require('winston');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
@@ -35,26 +36,80 @@ var users = require('./routes/users');
 var app = express();
 
 // Log Structure
-var logDirectory = path.join(__dirname, 'log');
+var logsDirectory = path.join(__dirname, 'logs');
+fs.existsSync(logsDirectory) || fs.mkdirSync(logsDirectory);
+var logDirectory = path.join(__dirname, 'logs/log');
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
 
-var accessLogStream = FileStreamRotator.getStream({
-  date_format: 'YYYYMMDD',
-  filename: path.join(logDirectory, 'access-%DATE%.log'),
-  frequency: 'daily',
-  verbose: false
-})
+var winston = new winston.Logger({
+    transports: [
+        new (require('winston-daily-rotate-file'))({
+            filename: 'console.log',
+            dirname: './logs',
+            timestamp: function() {
+              var p = new Date().toString().replace(/[A-Z]{3}\+/,'+').split(/ /);
+              return( p[2]+'/'+p[1]+'/'+p[3]+':'+p[4]+' '+p[5] );
+            }
+        }),
+        new winston.transports.File({
+          filename: 'console.log',
+          dirname: './logs/log',
+          json: true,
+          maxsize: 5242880,
+          timestamp: function() {
+            var p = new Date().toString().replace(/[A-Z]{3}\+/,'+').split(/ /);
+            return( p[2]+'/'+p[1]+'/'+p[3]+':'+p[4]+' '+p[5] );
+          }
+        })
+    ],
+    exceptionHandlers: [
+        new (require('winston-daily-rotate-file'))({
+          filename: 'console.log',
+          dirname: './logs',
+          timestamp: function() {
+            var p = new Date().toString().replace(/[A-Z]{3}\+/,'+').split(/ /);
+            return( p[2]+'/'+p[1]+'/'+p[3]+':'+p[4]+' '+p[5] );
+          }
+        }),
+        new winston.transports.File({
+          filename: 'console.log',
+          dirname: './logs/log',
+          json: true,
+          maxsize: 5242880,
+          timestamp: function() {
+            var p = new Date().toString().replace(/[A-Z]{3}\+/,'+').split(/ /);
+            return( p[2]+'/'+p[1]+'/'+p[3]+':'+p[4]+' '+p[5] );
+          }
+        })
+    ],
+    exitOnError: false
+});
+
+logger.token('date', function() {
+    var p = new Date().toString().replace(/[A-Z]{3}\+/,'+').split(/ /);
+    return( p[2]+'/'+p[1]+'/'+p[3]+':'+p[4]+' '+p[5] );
+});
 
 if(app.get('env') === 'development'){
-  app.use(logger('dev'));
+  app.use(logger('dev',{
+    stream:{
+      write: function(str){
+        console.log(str);
+        winston.info(str);
+      }
+    }
+  }));
 }else{
-  app.use(logger('combined',{stream: accessLogStream}));
+  app.use(logger('common',{
+    stream:{
+      write: function(str){
+        console.log(str);
+        winston.info(str);
+      }
+    }
+  }))
 }
 // End Log Structure
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -95,7 +150,8 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    console.log(err.message);
+    console.error('Caught err: ',err.message);
+    winston.error(err.message);
     res.json({message: err.message, error: err});
   });
 }
@@ -104,7 +160,8 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  console.log(err.message);
+  console.error('Caught err: ',err.message);
+  winston.error(err.message);
   res.json({message: err.message, error: {}});
 });
 
