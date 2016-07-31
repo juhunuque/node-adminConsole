@@ -46,6 +46,7 @@ var winston = new winston.Logger({
         new (require('winston-daily-rotate-file'))({
             filename: 'console.log',
             dirname: './logs',
+            colorize: true,
             timestamp: function() {
               var p = new Date().toString().replace(/[A-Z]{3}\+/,'+').split(/ /);
               return( p[2]+'/'+p[1]+'/'+p[3]+':'+p[4]+' '+p[5] );
@@ -56,6 +57,7 @@ var winston = new winston.Logger({
           dirname: './logs/log',
           json: true,
           maxsize: 5242880,
+          colorize: true,
           timestamp: function() {
             var p = new Date().toString().replace(/[A-Z]{3}\+/,'+').split(/ /);
             return( p[2]+'/'+p[1]+'/'+p[3]+':'+p[4]+' '+p[5] );
@@ -66,6 +68,7 @@ var winston = new winston.Logger({
         new (require('winston-daily-rotate-file'))({
           filename: 'console.log',
           dirname: './logs',
+          colorize: true,
           timestamp: function() {
             var p = new Date().toString().replace(/[A-Z]{3}\+/,'+').split(/ /);
             return( p[2]+'/'+p[1]+'/'+p[3]+':'+p[4]+' '+p[5] );
@@ -76,6 +79,7 @@ var winston = new winston.Logger({
           dirname: './logs/log',
           json: true,
           maxsize: 5242880,
+          colorize: true,
           timestamp: function() {
             var p = new Date().toString().replace(/[A-Z]{3}\+/,'+').split(/ /);
             return( p[2]+'/'+p[1]+'/'+p[3]+':'+p[4]+' '+p[5] );
@@ -150,8 +154,8 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    console.error('Caught err: ',err.message);
-    winston.error(err.message);
+    console.error('Caught err: ',err);
+    winston.error(err);
     res.json({message: err.message, error: err});
   });
 }
@@ -160,8 +164,8 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  console.error('Caught err: ',err.message);
-  winston.error(err.message);
+  console.error('Caught err: ',err);
+  winston.error(err);
   res.json({message: err.message, error: {}});
 });
 
