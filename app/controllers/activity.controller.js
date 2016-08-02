@@ -45,6 +45,9 @@ function createObject(req, res, next){
 
 // Remove object
 function removeObject(req, res, next){
+  if(!mongoose.Types.ObjectId.isValid(req.params.id)){
+    return next(new CustomError('Invalid Id',400));
+  }
   Model.removeObject(req.params.id, (err, object)=>{
     if(err){return next(err);}
 
