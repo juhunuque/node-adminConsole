@@ -1,1 +1,192 @@
-<h1>Testingggg USER</h1>
+<!-- Add Button -->
+<button ng-click="formActivate(null)" ng-show="addBtnOpt" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored jn-button-fix">
+  <i class="material-icons">add</i>
+</button>
+<!-- End Add Button -->
+
+<!-- Details Card -->
+<div ng-show="formDetailsOpt" class="jn-content-div jn-card-wide mdl-card mdl-shadow--2dp">
+  <div class="mdl-card__title">
+    <h2 class="mdl-card__title-text">Detalles</h2>
+  </div>
+  <div class="mdl-card__supporting-text">
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Nombre:</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <span>{{itemActivated.nombre}}</span>
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Apellidos:</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <span>{{itemActivated.apellidos}}</span>
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Correo:</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <span>{{itemActivated.correo}}</span>
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Fecha Nacimiento (MM/dd/YYYY):</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <span>{{itemActivated.fechaNacimiento}}</span>
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Genero:</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <span>{{itemActivated.genero}}</span>
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Foto:</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <span>{{itemActivated.foto}}</span>
+      </div>
+    </div>
+
+  </div>
+  <div class="mdl-card__actions mdl-card--border">
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <a ng-click="refresh()" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+          Cerrar
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Details Card -->
+
+
+<!-- Update / Remove Card -->
+<div ng-show="formOpt" class="jn-content-div jn-card-wide mdl-card mdl-shadow--2dp">
+  <div class="mdl-card__title">
+    <h2 class="mdl-card__title-text">Usuario</h2>
+  </div>
+  <div class="mdl-card__supporting-text">
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Nombre:</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <input class="mdl-textfield__input" type="text" ng-model="itemActivated.nombre">
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Apellidos:</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <input class="mdl-textfield__input" type="text" ng-model="itemActivated.apellidos">
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Correo:</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <input class="mdl-textfield__input" type="text" ng-model="itemActivated.correo">
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Fecha Nacimiento (MM/dd/YYYY):</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <input class="mdl-textfield__input" type="text" ng-model="itemActivated.fechaNacimiento">
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Genero:</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <input class="mdl-textfield__input" type="text" ng-model="itemActivated.genero">
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Foto:</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <input class="mdl-textfield__input" type="text" ng-model="itemActivated.foto">
+      </div>
+    </div>
+  </div>
+
+  <div class="mdl-card__actions mdl-card--border">
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <a ng-click="refresh()" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+          Cancelar
+        </a>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <a ng-click="confirmChanges()"class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+          Aceptar
+        </a>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="mdl-card__menu">
+    <button ng-disabled="delBtnOpt" ng-click="removeItem(itemActivated._id)" id="deleteActivity" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+      <i class="material-icons">delete</i>
+    </button>
+  </div>
+</div>
+
+<!-- Tooltip -->
+<div class="mdl-tooltip" for="deleteActivity">
+  Remover
+</div>
+<!-- End Update / Remove Card -->
+
+<!-- Datatable -->
+<div class="jn-content-div mdl-color--white mdl-shadow--2dp">
+  <h3>Administrar Usuarios</h3>
+  <table datatable="ng" dt-options="dtOptions" class="table table-hover">
+          <thead >
+              <tr >
+                  <th>#</th>
+                  <th>Nombre</th>
+                  <th>Apellidos</th>
+                  <th>Correo</th>
+                  <th>F. Nacimiento <br />(MM/dd/YYYY)</th>
+                  <th>Genero</th>
+                  <th>Acciones</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr ng-repeat="item in items">
+                  <td>{{$index + 1}}</td>
+                  <td>{{item.nombre}}</td>
+                  <td>{{item.apellidos}}</td>
+                  <td>{{item.correo}}</td>
+                  <td>{{item.fechaNacimiento | date:'MM/dd/yyyy'}}</td>
+                  <td>{{item.genero}}</td>
+                  <td>
+                    <button ng-disabled="tablBtnsOpt" ng-click="formActivate(item)" type="button" class="mdl-button"><i class="material-icons left">build</i></button>
+                    <button ng-disabled="tablBtnsOpt" ng-click="formDetailsActivate(item)" type="button" class="mdl-button"><i class="material-icons left">search</i></button>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+</div>
+<!-- End Datatable -->
