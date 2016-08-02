@@ -1,7 +1,7 @@
 'user strict'
 angular.module("softtechApp")
 
-.controller('HomeCtrl',['$scope','$http','toastr','$dataFactory',($scope, $http, toastr,$dataFactory)=>{
+.controller('HomeCtrl',['$scope','$http','$dataFactory',($scope, $http,$dataFactory)=>{
   $dataFactory.menuActive = "Home";
   console.log('HomeCtrl init');
 }]);

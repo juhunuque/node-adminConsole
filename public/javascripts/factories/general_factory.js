@@ -3,9 +3,11 @@ angular.module('softtechApp')
 .factory('$dataFactory',function(){
 
     var menuActive = {};
+    const baseUrl = 'http://localhost:3000';
 
     return {
-        menuActive: menuActive
+        menuActive: menuActive,
+        baseUrl: baseUrl
         };
 })
 

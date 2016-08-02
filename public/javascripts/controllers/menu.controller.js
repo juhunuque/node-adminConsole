@@ -1,7 +1,7 @@
 'user strict'
 angular.module("softtechApp")
 
-.controller('MenuCtrl',['$scope','$http','toastr', '$dataFactory',($scope, $http, toastr, $dataFactory)=>{
+.controller('MenuCtrl',['$scope', '$dataFactory',($scope, $dataFactory)=>{
   $scope.title = $dataFactory.menuActive;
   $scope.$watch(()=>{
     return $dataFactory.menuActive;

@@ -10,3 +10,21 @@
   bottom: 45px;
   right: 24px;
 }
+
+/*
+ * Animation
+ */
+.ng-hide-add{
+    animation:0.5s bounceOut ease;
+}
+
+.ng-hide-remove{
+    animation:0.5s bounceIn ease;
+}
+
+/*
+ * Card
+ */
+.jn-card-wide.mdl-card {
+  width: 512px;
+}

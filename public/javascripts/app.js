@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('softtechApp',['ngRoute','ngAnimate','toastr','datatables']);
+var app = angular.module('softtechApp',['ngRoute','ngAnimate','datatables','ngAnimate','ui-notification']);
 
 app.config(['$routeProvider', ($routeProvider)=>{
   $routeProvider
