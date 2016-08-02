@@ -3,7 +3,7 @@ angular.module('softtechApp')
 .factory('$dataFactory',function(){
 
     var menuActive = {};
-    const baseUrl = 'http://localhost:3000';
+    const baseUrl = 'http://127.0.0.1:3000';
 
     return {
         menuActive: menuActive,

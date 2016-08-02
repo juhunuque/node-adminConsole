@@ -22,7 +22,7 @@ angular.module("softtechApp")
     $scope.itemActivated = {};
 
     // Get Data from server
-    $http.get($dataFactory.baseUrl+'/v1/activities').then(function(response){
+    $http.get('/v1/activities').then(function(response){
         $scope.items = response.data;
     })
   };
@@ -55,7 +55,7 @@ angular.module("softtechApp")
 
   // Remove an item
   $scope.removeItem = function(id){
-    $http.delete($dataFactory.baseUrl+'/v1/activities/'+id).then(function(response){
+    $http.delete('/v1/activities/'+id).then(function(response){
         Notification.success({title:'Exitoso', message:'Removido exitosamente!'});
         $scope.refresh();
     }, function(error){
@@ -80,7 +80,7 @@ angular.module("softtechApp")
       repeticiones : softechUtil.validateDataNumber($scope.itemActivated.repeticiones),
       peso : softechUtil.validateDataNumber($scope.itemActivated.peso)
     };
-    $http.post($dataFactory.baseUrl+'/v1/activities/', data).then(function(response){
+    $http.post('/v1/activities/', data).then(function(response){
         Notification.success({title:'Exitoso', message:'Ingresado exitosamente!'});
         $scope.refresh();
     }, function(error){
@@ -105,7 +105,7 @@ angular.module("softtechApp")
       repeticiones : softechUtil.validateDataNumber($scope.itemActivated.repeticiones),
       peso : softechUtil.validateDataNumber($scope.itemActivated.peso)
     };
-    $http.put($dataFactory.baseUrl+'/v1/activities/'+$scope.itemActivated._id, data).then(function(response){
+    $http.put('/v1/activities/'+$scope.itemActivated._id, data).then(function(response){
         Notification.success({title:'Exitoso', message:'Modificado exitosamente!'});
         $scope.refresh();
     }, function(error){
