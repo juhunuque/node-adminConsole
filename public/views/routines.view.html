@@ -1,1 +1,243 @@
-<h1>TESTING routine</h1>
+<!-- Add Button -->
+<button ng-click="formActivate(null)" ng-show="addBtnOpt" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored jn-button-fix">
+  <i class="material-icons">add</i>
+</button>
+<!-- End Add Button -->
+
+<!-- Details Card -->
+<div ng-show="formDetailsOpt" class="jn-content-div jn-card-wide mdl-card mdl-shadow--2dp">
+  <div class="mdl-card__title">
+    <h2 class="mdl-card__title-text">Detalles</h2>
+  </div>
+  <div class="mdl-card__supporting-text">
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Rutina:</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <span>{{itemActivated.nombreRutina}}</span>
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Detalle:</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <span>{{itemActivated.detalle}}</span>
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Rondas:</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <span>{{validateNumberData(itemActivated.rondas)}}</span>
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>T. total (seg):</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <span>{{validateNumberData(itemActivated.tiempoTotal)}}</span>
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>T. entre actividades (seg):</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <span>{{validateNumberData(itemActivated.tiempoEntreActividades)}}</span>
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>T. entre rondas (seg):</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <span>{{validateNumberData(itemActivated.tiempoEntreRondas)}}</span>
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Req. tiempo (seg):</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <span>{{validateNumberData(itemActivated.reqTiempo)}}</span>
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Req. Peso:</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <span>{{validateNumberData(itemActivated.reqPeso)}}</span>
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Req. Cant:</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <span>{{validateNumberData(itemActivated.reqCant)}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="mdl-card__actions mdl-card--border">
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <a ng-click="refresh()" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+          Cerrar
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Details Card -->
+
+<!-- Update / Remove Card -->
+<div ng-show="formOpt" class="jn-content-div jn-card-wide mdl-card mdl-shadow--2dp">
+  <div class="mdl-card__title">
+    <h2 class="mdl-card__title-text">Actividad</h2>
+  </div>
+  <div class="mdl-card__supporting-text">
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Rutina:</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <input class="mdl-textfield__input" type="text" ng-model="itemActivated.nombreRutina">
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Detalle:</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <textarea class="mdl-textfield__input" type="text" rows= "3" ng-model="itemActivated.detalle" ></textarea>
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Rondas:</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" ng-model="itemActivated.rondas">
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>T. total (seg):</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" ng-model="itemActivated.tiempoTotal">
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>T. entre actividades (seg):</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" ng-model="itemActivated.tiempoEntreActividades">
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>T. entre rondas (seg):</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" ng-model="itemActivated.tiempoEntreRondas">
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Req. tiempo (seg):</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" ng-model="itemActivated.reqTiempo">
+
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Req. Peso:</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" ng-model="itemActivated.reqPeso">
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <span><strong>Req. Cant:</strong></span>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" ng-model="itemActivated.reqCant">
+      </div>
+    </div>
+  </div>
+
+  <div class="mdl-card__actions mdl-card--border">
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+        <a ng-click="refresh()" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+          Cancelar
+        </a>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+        <a ng-click="confirmChanges()"class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+          Aceptar
+        </a>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="mdl-card__menu">
+    <button ng-disabled="delBtnOpt" ng-click="removeItem(itemActivated._id)" id="deleteActivity" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+      <i class="material-icons">delete</i>
+    </button>
+  </div>
+</div>
+
+<!-- Tooltip -->
+<div class="mdl-tooltip" for="deleteActivity">
+  Remover
+</div>
+<!-- End Update / Remove Card -->
+
+<!-- Datatable -->
+<div class="jn-content-div mdl-color--white mdl-shadow--2dp">
+  <h3>Administrar Rutinas</h3>
+  <table datatable="ng" dt-options="dtOptions" class="table table-hover">
+          <thead >
+              <tr >
+                  <th>#</th>
+                  <th>Nombre</th>
+                  <th>Rondas</th>
+                  <th>T. Total (seg)</th>
+                  <th>Req. Tiempo (seg)</th>
+                  <th>Req. Peso</th>
+                  <th>Req. Cantidad</th>
+                  <th>Tema</th>
+                  <th>Acciones</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr ng-repeat="item in items">
+                  <td>{{$index + 1}}</td>
+                  <td>{{item.nombreRutina}}</td>
+                  <td>{{item.rondas}}</td>
+                  <td>{{validateNumberData(item.tiempoTotal)}}</td>
+                  <td>{{validateNumberData(item.reqTiempo)}}</td>
+                  <td>{{validateNumberData(item.reqPeso)}}</td>
+                  <td>{{validateNumberData(item.reqCant)}}</td>
+                  <td>{{item.tema}}</td>
+                  <td>
+                    <button ng-disabled="tablBtnsOpt" ng-click="formActivate(item)" type="button" class="mdl-button"><i class="material-icons left">build</i></button>
+                    <button ng-disabled="tablBtnsOpt" ng-click="formDetailsActivate(item)" type="button" class="mdl-button"><i class="material-icons left">search</i></button>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+</div>
+<!-- End Datatable -->

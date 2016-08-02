@@ -37,7 +37,6 @@ angular.module("softtechApp")
     $scope.formOpt = true;
     $scope.tablBtnsOpt = true;
     $scope.addBtnOpt = false;
-
   };
 
   // Activate Form to modify or add data
@@ -51,6 +50,10 @@ angular.module("softtechApp")
 
   $scope.validateEmptyData = function(item){
     return softechUtil.validateEmptyData(item);
+  };
+
+  $scope.validateNumberData = function(item){
+    return softechUtil.validateDataNumber(item);
   };
 
   // Remove an item

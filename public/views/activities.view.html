@@ -161,9 +161,9 @@
                   <td>{{$index + 1}}</td>
                   <td>{{item.nombreActividad}}</td>
                   <td>{{item.detalle}}</td>
-                  <td>{{item.duracion}}</td>
-                  <td>{{item.repeticiones}}</td>
-                  <td>{{item.peso}}</td>
+                  <td>{{validateNumberData(item.duracion)}}</td>
+                  <td>{{validateNumberData(item.repeticiones)}}</td>
+                  <td>{{validateNumberData(item.peso)}}</td>
                   <td>
                     <button ng-disabled="tablBtnsOpt" ng-click="formActivate(item)" type="button" class="mdl-button"><i class="material-icons left">build</i></button>
                     <button ng-disabled="tablBtnsOpt" ng-click="formDetailsActivate(item)" type="button" class="mdl-button"><i class="material-icons left">search</i></button>
