@@ -10,6 +10,7 @@ angular.module("softtechApp")
       .withOption('bLengthChange', false)
       .withOption('autoWidth', true)
       .withOption('scrollY', "200px")
+      .withOption('oLanguage', {"sEmptyTable": "No hay datos..." })
       .withOption('scrollCollapse', true);
 
   //Functions

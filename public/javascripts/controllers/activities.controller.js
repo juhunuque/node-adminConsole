@@ -10,6 +10,7 @@ angular.module("softtechApp")
       .withOption('bLengthChange', false)
       .withOption('autoWidth', true)
       .withOption('scrollY', "200px")
+      .withOption('oLanguage', {"sEmptyTable": "No hay datos..." })
       .withOption('scrollCollapse', true);
 
   //Functions
@@ -29,9 +30,9 @@ angular.module("softtechApp")
 
   // Activate Form to modify or add data
   $scope.formActivate = function(item){
-    if(item != null){ // Insert
+    if(item != null){ // Update
       $scope.itemActivated = item;
-    }else{ // Update
+    }else{ // Insert
       $scope.delBtnOpt = true;
     }
     $scope.formOpt = true;
