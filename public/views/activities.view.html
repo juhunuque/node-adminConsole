@@ -3,6 +3,10 @@
 <button ng-click="formActivate(null)" ng-show="addBtnOpt" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored jn-button-fix">
   <i class="material-icons">add</i>
 </button>
+<!-- Tooltip -->
+<div class="mdl-tooltip" for="addBtn">
+  Añadir nuevo
+</div>
 <!-- End Add Button -->
 
 <!-- Details Card -->
@@ -16,7 +20,7 @@
         <span><strong>Actividad:</strong></span>
       </div>
       <div class="mdl-cell mdl-cell--6-col">
-        <span>{{itemActivated.nombreActividad}}</span>
+        <span>{{itemObjectActived.nombreActividad}}</span>
       </div>
     </div>
     <div class="mdl-grid">
@@ -24,7 +28,7 @@
         <span><strong>Detalle:</strong></span>
       </div>
       <div class="mdl-cell mdl-cell--6-col">
-        <span>{{itemActivated.detalle}}</span>
+        <span>{{itemObjectActived.detalle}}</span>
       </div>
     </div>
     <div class="mdl-grid">
@@ -32,7 +36,7 @@
         <span><strong>Duracion (Segundos):</strong></span>
       </div>
       <div class="mdl-cell mdl-cell--6-col">
-        <span>{{itemActivated.duracion}}</span>
+        <span>{{itemObjectActived.duracion}}</span>
       </div>
     </div>
     <div class="mdl-grid">
@@ -40,7 +44,7 @@
         <span><strong>Repeticiones:</strong></span>
       </div>
       <div class="mdl-cell mdl-cell--6-col">
-        <span>{{itemActivated.repeticiones}}</span>
+        <span>{{itemObjectActived.repeticiones}}</span>
       </div>
     </div>
     <div class="mdl-grid">
@@ -48,7 +52,7 @@
         <span><strong>Peso:</strong></span>
       </div>
       <div class="mdl-cell mdl-cell--6-col">
-        <span>{{itemActivated.peso}}</span>
+        <span>{{itemObjectActived.peso}}</span>
       </div>
     </div>
   </div>
@@ -76,7 +80,7 @@
         <span><strong>Actividad:</strong></span>
       </div>
       <div class="mdl-cell mdl-cell--6-col">
-        <input class="mdl-textfield__input" type="text" ng-model="itemActivated.nombreActividad">
+        <input class="mdl-textfield__input" type="text" ng-model="itemObjectActived.nombreActividad">
       </div>
     </div>
     <div class="mdl-grid">
@@ -84,7 +88,7 @@
         <span><strong>Detalle:</strong></span>
       </div>
       <div class="mdl-cell mdl-cell--6-col">
-        <textarea class="mdl-textfield__input" type="text" rows= "3" ng-model="itemActivated.detalle" ></textarea>
+        <textarea class="mdl-textfield__input" type="text" rows= "3" ng-model="itemObjectActived.detalle" ></textarea>
       </div>
     </div>
     <div class="mdl-grid">
@@ -92,7 +96,7 @@
         <span><strong>Duracion (Segundos):</strong></span>
       </div>
       <div class="mdl-cell mdl-cell--6-col">
-        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" ng-model="itemActivated.duracion">
+        <input class="mdl-textfield__input" type="text" pattern="[0-9]+([\.,][0-9]+)?" ng-model="itemObjectActived.duracion">
       </div>
     </div>
     <div class="mdl-grid">
@@ -100,7 +104,7 @@
         <span><strong>Repeticiones:</strong></span>
       </div>
       <div class="mdl-cell mdl-cell--6-col">
-        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" ng-model="itemActivated.repeticiones">
+        <input class="mdl-textfield__input" type="text" pattern="[0-9]+([\.,][0-9]+)?" ng-model="itemObjectActived.repeticiones">
       </div>
     </div>
     <div class="mdl-grid">
@@ -108,7 +112,7 @@
         <span><strong>Peso:</strong></span>
       </div>
       <div class="mdl-cell mdl-cell--6-col">
-        <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" ng-model="itemActivated.peso">
+        <input class="mdl-textfield__input" type="text" pattern="[0-9]+([\.,][0-9]+)?" ng-model="itemObjectActived.peso">
       </div>
     </div>
   </div>
@@ -129,7 +133,7 @@
 
   </div>
   <div class="mdl-card__menu">
-    <button ng-disabled="delBtnOpt" ng-click="removeItem(itemActivated._id)" id="deleteActivity" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+    <button ng-disabled="delBtnOpt" ng-click="removeItem(itemObjectActived._id)" id="deleteActivity" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
       <i class="material-icons">delete</i>
     </button>
   </div>

@@ -20,20 +20,27 @@ angular.module("softtechApp")
     $scope.formDetailsOpt = false;
     $scope.addBtnOpt = true;
     $scope.delBtnOpt = false;
-    $scope.itemActivated = {};
+    $scope.itemObjectActived = {}; // Item got it from datatable
+    $scope.itemListSelected = {}; // Item got it from dropdown
 
     // Get Data from server
     $http.get('/v1/users').then(function(response){
         $scope.items = response.data;
+    })
+
+    // Get routines from server
+    $http.get('/v1/routines').then(function(response){
+        $scope.itemsList = response.data;
     })
   };
 
   // Activate Form to modify or add data
   $scope.formActivate = function(item){
     if(item != null){ // Update
-      $scope.itemActivated = item;
+      $scope.itemObjectActived = item;
       const dateAux = $filter('date')(item.fechaNacimiento, "MM/dd/yyyy");
-      $scope.itemActivated.fechaNacimiento = dateAux;
+      $scope.itemObjectActived.fechaNacimiento = dateAux;
+      //$scope.itemsList = softechUtil.getArrayWithoutDuplicates( $scope.itemsList,$scope.itemObjectActived.rutinas );
     }else{ // Insert
       $scope.delBtnOpt = true;
     }
@@ -44,9 +51,9 @@ angular.module("softtechApp")
 
   // Activate Form to modify or add data
   $scope.formDetailsActivate = function(item){
-    $scope.itemActivated = item;
+    $scope.itemObjectActived = item;
     const dateAux = $filter('date')(item.fechaNacimiento, "MM/dd/yyyy");
-    $scope.itemActivated.fechaNacimiento = dateAux;
+    $scope.itemObjectActived.fechaNacimiento = dateAux;
     $scope.formDetailsOpt = true;
     $scope.addBtnOpt = false;
     $scope.tablBtnsOpt = true;
@@ -82,13 +89,13 @@ angular.module("softtechApp")
   // Add a new Item
   $scope.addNewItem = function(){
     var data = {
-      nombre: softechUtil.validateEmptyData($scope.itemActivated.nombre),
-      apellidos: softechUtil.validateEmptyData($scope.itemActivated.apellidos),
-      correo: softechUtil.validateEmptyData($scope.itemActivated.correo),
-      fechaNacimiento: softechUtil.validateEmptyData($scope.itemActivated.fechaNacimiento),
-      genero: softechUtil.validateEmptyData($scope.itemActivated.genero),
-      foto: softechUtil.validateEmptyData($scope.itemActivated.foto),
-      rutinas:[]
+      nombre: softechUtil.validateEmptyData($scope.itemObjectActived.nombre),
+      apellidos: softechUtil.validateEmptyData($scope.itemObjectActived.apellidos),
+      correo: softechUtil.validateEmptyData($scope.itemObjectActived.correo),
+      fechaNacimiento: softechUtil.validateEmptyData($scope.itemObjectActived.fechaNacimiento),
+      genero: softechUtil.validateEmptyData($scope.itemObjectActived.genero),
+      foto: softechUtil.validateEmptyData($scope.itemObjectActived.foto),
+      rutinas: $scope.itemObjectActived.rutinas
     };
     $http.post('/v1/users/', data).then(function(response){
         Notification.success({title:'Exitoso', message:'Ingresado exitosamente!'});
@@ -109,15 +116,15 @@ angular.module("softtechApp")
   // Modify an existing item
   $scope.updateItem = function(){
     var data = {
-      nombre: softechUtil.validateEmptyData($scope.itemActivated.nombre),
-      apellidos: softechUtil.validateEmptyData($scope.itemActivated.apellidos),
-      correo: softechUtil.validateEmptyData($scope.itemActivated.correo),
-      fechaNacimiento: softechUtil.validateEmptyData($scope.itemActivated.fechaNacimiento),
-      genero: softechUtil.validateEmptyData($scope.itemActivated.genero),
-      foto: softechUtil.validateEmptyData($scope.itemActivated.foto),
-      rutinas:[]
+      nombre: softechUtil.validateEmptyData($scope.itemObjectActived.nombre),
+      apellidos: softechUtil.validateEmptyData($scope.itemObjectActived.apellidos),
+      correo: softechUtil.validateEmptyData($scope.itemObjectActived.correo),
+      fechaNacimiento: softechUtil.validateEmptyData($scope.itemObjectActived.fechaNacimiento),
+      genero: softechUtil.validateEmptyData($scope.itemObjectActived.genero),
+      foto: softechUtil.validateEmptyData($scope.itemObjectActived.foto),
+      rutinas:$scope.itemObjectActived.rutinas
     };
-    $http.put('/v1/users/'+$scope.itemActivated._id, data).then(function(response){
+    $http.put('/v1/users/'+$scope.itemObjectActived._id, data).then(function(response){
         Notification.success({title:'Exitoso', message:'Modificado exitosamente!'});
         $scope.refresh();
     }, function(error){
@@ -133,13 +140,27 @@ angular.module("softtechApp")
     });
   };
 
+  // Compare if the action is an insert or update
   $scope.confirmChanges = function(){
     if(!$scope.delBtnOpt){
       $scope.updateItem();
     }else{
       $scope.addNewItem();
     }
-  }
+  };
 
+  // Add an item to routines array
+  $scope.addListItem = function(){
+    $scope.itemObjectActived.rutinas.push($scope.itemListSelected);
+    $scope.itemListSelected = {};
+  };
+
+  // Remove an item from routines array
+  $scope.removeListItem = function(item){
+        let i = $scope.itemObjectActived.rutinas.indexOf(item);
+        if(i != -1) {
+            $scope.itemObjectActived.rutinas.splice(i, 1);
+        }
+    }
   $scope.refresh();
 }]);

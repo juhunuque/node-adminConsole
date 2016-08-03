@@ -27,4 +27,12 @@
       return result;
   };
 
+  // Compare two arrays and find duplicates, then returns an array without duplicate items
+  softechUtil.getArrayWithoutDuplicates = function( Array2, Array1 ){
+    Array1 = Array1.filter(function(val) {
+      return Array2.indexOf(val) == -1;
+    });
+    return Array1;
+  };
+
 })(window.softechUtil = window.softechUtil || {}, jQuery);

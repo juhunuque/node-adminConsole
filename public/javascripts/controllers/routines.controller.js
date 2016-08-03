@@ -20,18 +20,25 @@ angular.module("softtechApp")
     $scope.formDetailsOpt = false;
     $scope.addBtnOpt = true;
     $scope.delBtnOpt = false;
-    $scope.itemActivated = {};
+    $scope.itemObjectActived = {}; // Item got it from datatable
+    $scope.itemListSelected = {}; // Item got it from dropdown
 
     // Get Data from server
     $http.get('/v1/routines').then(function(response){
         $scope.items = response.data;
+    })
+
+    // Get activities from server
+    $http.get('/v1/activities').then(function(response){
+        $scope.itemsList = response.data;
     })
   };
 
   // Activate Form to modify or add data
   $scope.formActivate = function(item){
     if(item != null){ // Update
-      $scope.itemActivated = item;
+      $scope.itemObjectActived = item;
+      //$scope.itemsList = softechUtil.getArrayWithoutDuplicates( $scope.itemsList,$scope.itemObjectActived.actividades );
     }else{ // Insert
       $scope.delBtnOpt = true;
     }
@@ -42,7 +49,7 @@ angular.module("softtechApp")
 
   // Activate Form to modify or add data
   $scope.formDetailsActivate = function(item){
-    $scope.itemActivated = item;
+    $scope.itemObjectActived = item;
     $scope.formDetailsOpt = true;
     $scope.addBtnOpt = false;
     $scope.tablBtnsOpt = true;
@@ -78,17 +85,17 @@ angular.module("softtechApp")
   // Add a new Item
   $scope.addNewItem = function(){
     var data = {
-      nombreRutina: softechUtil.validateEmptyData($scope.itemActivated.nombreRutina),
-      rondas: softechUtil.validateDataNumber($scope.itemActivated.duracion),
-      detalle: softechUtil.validateEmptyData($scope.itemActivated.detalle),
-      tiempoTotal:softechUtil.validateDataNumber($scope.itemActivated.tiempoTotal),
-      tiempoEntreActividades: softechUtil.validateDataNumber($scope.itemActivated.tiempoEntreActividades),
-      tiempoEntreRondas: softechUtil.validateDataNumber($scope.itemActivated.tiempoEntreRondas),
-      reqTiempo: softechUtil.validateDataNumber($scope.itemActivated.reqTiempo),
-      reqPeso: softechUtil.validateDataNumber($scope.itemActivated.reqPeso),
-      reqCant: softechUtil.validateDataNumber($scope.itemActivated.reqCant),
-      tema: softechUtil.validateDataNumber($scope.itemActivated.tema),
-      actividades:[]
+      nombreRutina: softechUtil.validateEmptyData($scope.itemObjectActived.nombreRutina),
+      rondas: softechUtil.validateDataNumber($scope.itemObjectActived.duracion),
+      detalle: softechUtil.validateEmptyData($scope.itemObjectActived.detalle),
+      tiempoTotal:softechUtil.validateDataNumber($scope.itemObjectActived.tiempoTotal),
+      tiempoEntreActividades: softechUtil.validateDataNumber($scope.itemObjectActived.tiempoEntreActividades),
+      tiempoEntreRondas: softechUtil.validateDataNumber($scope.itemObjectActived.tiempoEntreRondas),
+      reqTiempo: softechUtil.validateDataNumber($scope.itemObjectActived.reqTiempo),
+      reqPeso: softechUtil.validateDataNumber($scope.itemObjectActived.reqPeso),
+      reqCant: softechUtil.validateDataNumber($scope.itemObjectActived.reqCant),
+      tema: softechUtil.validateDataNumber($scope.itemObjectActived.tema),
+      actividades: $scope.itemObjectActived.actividades
     };
     $http.post('/v1/routines/', data).then(function(response){
         Notification.success({title:'Exitoso', message:'Ingresado exitosamente!'});
@@ -109,19 +116,19 @@ angular.module("softtechApp")
   // Modify an existing item
   $scope.updateItem = function(){
     var data = {
-      nombreRutina: softechUtil.validateEmptyData($scope.itemActivated.nombreRutina),
-      rondas: softechUtil.validateDataNumber($scope.itemActivated.duracion),
-      detalle: softechUtil.validateEmptyData($scope.itemActivated.detalle),
-      tiempoTotal:softechUtil.validateDataNumber($scope.itemActivated.tiempoTotal),
-      tiempoEntreActividades: softechUtil.validateDataNumber($scope.itemActivated.tiempoEntreActividades),
-      tiempoEntreRondas: softechUtil.validateDataNumber($scope.itemActivated.tiempoEntreRondas),
-      reqTiempo: softechUtil.validateDataNumber($scope.itemActivated.reqTiempo),
-      reqPeso: softechUtil.validateDataNumber($scope.itemActivated.reqPeso),
-      reqCant: softechUtil.validateDataNumber($scope.itemActivated.reqCant),
-      tema: softechUtil.validateDataNumber($scope.itemActivated.tema),
-      actividades:[]
+      nombreRutina: softechUtil.validateEmptyData($scope.itemObjectActived.nombreRutina),
+      rondas: softechUtil.validateDataNumber($scope.itemObjectActived.duracion),
+      detalle: softechUtil.validateEmptyData($scope.itemObjectActived.detalle),
+      tiempoTotal:softechUtil.validateDataNumber($scope.itemObjectActived.tiempoTotal),
+      tiempoEntreActividades: softechUtil.validateDataNumber($scope.itemObjectActived.tiempoEntreActividades),
+      tiempoEntreRondas: softechUtil.validateDataNumber($scope.itemObjectActived.tiempoEntreRondas),
+      reqTiempo: softechUtil.validateDataNumber($scope.itemObjectActived.reqTiempo),
+      reqPeso: softechUtil.validateDataNumber($scope.itemObjectActived.reqPeso),
+      reqCant: softechUtil.validateDataNumber($scope.itemObjectActived.reqCant),
+      tema: softechUtil.validateDataNumber($scope.itemObjectActived.tema),
+      actividades: $scope.itemObjectActived.actividades
     };
-    $http.put('/v1/routines/'+$scope.itemActivated._id, data).then(function(response){
+    $http.put('/v1/routines/'+$scope.itemObjectActived._id, data).then(function(response){
         Notification.success({title:'Exitoso', message:'Modificado exitosamente!'});
         $scope.refresh();
     }, function(error){
@@ -144,6 +151,20 @@ angular.module("softtechApp")
       $scope.addNewItem();
     }
   }
+
+  // Add an item to routines array
+  $scope.addListItem = function(){
+    $scope.itemObjectActived.actividades.push($scope.itemListSelected);
+    $scope.itemListSelected = {};
+  };
+
+  // Remove an item from routines array
+  $scope.removeListItem = function(item){
+        let i = $scope.itemObjectActived.actividades.indexOf(item);
+        if(i != -1) {
+            $scope.itemObjectActived.actividades.splice(i, 1);
+        }
+    }
 
   $scope.refresh();
 }]);

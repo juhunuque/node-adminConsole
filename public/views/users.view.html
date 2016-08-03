@@ -1,162 +1,248 @@
 <!-- Add Button -->
-<button ng-click="formActivate(null)" ng-show="addBtnOpt" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored jn-button-fix">
+<button id="addBtn" ng-click="formActivate(null)" ng-show="addBtnOpt" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored jn-button-fix">
   <i class="material-icons">add</i>
 </button>
+<!-- Tooltip -->
+<div class="mdl-tooltip" for="addBtn">
+  Añadir nuevo
+</div>
 <!-- End Add Button -->
 
-<!-- Details Card -->
-<div ng-show="formDetailsOpt" class="jn-content-div jn-card-wide mdl-card mdl-shadow--2dp">
-  <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text">Detalles</h2>
-  </div>
-  <div class="mdl-card__supporting-text">
-    <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--6-col">
-        <span><strong>Nombre:</strong></span>
+<!-- Details -->
+<div ng-show="formDetailsOpt" class="mdl-grid">
+  <div class="mdl-cell mdl-cell--6-col">
+    <!-- Details Card -->
+    <div  class="jn-content-div jn-card-wide mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Detalles</h2>
       </div>
-      <div class="mdl-cell mdl-cell--6-col">
-        <span>{{itemActivated.nombre}}</span>
-      </div>
-    </div>
-    <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--6-col">
-        <span><strong>Apellidos:</strong></span>
-      </div>
-      <div class="mdl-cell mdl-cell--6-col">
-        <span>{{itemActivated.apellidos}}</span>
-      </div>
-    </div>
-    <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--6-col">
-        <span><strong>Correo:</strong></span>
-      </div>
-      <div class="mdl-cell mdl-cell--6-col">
-        <span>{{itemActivated.correo}}</span>
-      </div>
-    </div>
-    <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--6-col">
-        <span><strong>Fecha Nacimiento (MM/dd/YYYY):</strong></span>
-      </div>
-      <div class="mdl-cell mdl-cell--6-col">
-        <span>{{itemActivated.fechaNacimiento}}</span>
-      </div>
-    </div>
-    <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--6-col">
-        <span><strong>Genero:</strong></span>
-      </div>
-      <div class="mdl-cell mdl-cell--6-col">
-        <span>{{itemActivated.genero}}</span>
-      </div>
-    </div>
-    <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--6-col">
-        <span><strong>Foto:</strong></span>
-      </div>
-      <div class="mdl-cell mdl-cell--6-col">
-        <span>{{itemActivated.foto}}</span>
-      </div>
-    </div>
+      <div class="mdl-card__supporting-text">
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--6-col">
+            <span><strong>Nombre:</strong></span>
+          </div>
+          <div class="mdl-cell mdl-cell--6-col">
+            <span>{{itemObjectActived.nombre}}</span>
+          </div>
+        </div>
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--6-col">
+            <span><strong>Apellidos:</strong></span>
+          </div>
+          <div class="mdl-cell mdl-cell--6-col">
+            <span>{{itemObjectActived.apellidos}}</span>
+          </div>
+        </div>
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--6-col">
+            <span><strong>Correo:</strong></span>
+          </div>
+          <div class="mdl-cell mdl-cell--6-col">
+            <span>{{itemObjectActived.correo}}</span>
+          </div>
+        </div>
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--6-col">
+            <span><strong>Fecha Nacimiento (MM/dd/YYYY):</strong></span>
+          </div>
+          <div class="mdl-cell mdl-cell--6-col">
+            <span>{{itemObjectActived.fechaNacimiento}}</span>
+          </div>
+        </div>
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--6-col">
+            <span><strong>Genero:</strong></span>
+          </div>
+          <div class="mdl-cell mdl-cell--6-col">
+            <span>{{itemObjectActived.genero}}</span>
+          </div>
+        </div>
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--6-col">
+            <span><strong>Foto:</strong></span>
+          </div>
+          <div class="mdl-cell mdl-cell--6-col">
+            <span>{{itemObjectActived.foto}}</span>
+          </div>
+        </div>
 
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--6-col">
+            <a ng-click="refresh()" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              Cerrar
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Details Card -->
   </div>
-  <div class="mdl-card__actions mdl-card--border">
-    <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--6-col">
-        <a ng-click="refresh()" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-          Cerrar
-        </a>
+  <div class="mdl-cell mdl-cell--6-col">
+    <!-- Pick Up List -->
+    <div class="jn-content-div jn-card-wide mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title mdl-card--expand">
+        <h2 class="mdl-card__title-text">Rutinas de {{itemObjectActived.nombre}}</h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+        <ul class="demo-list-three mdl-list" ng-show="itemObjectActived.rutinas">
+          <li class="mdl-list__item mdl-list__item--three-line" ng-repeat="item in itemObjectActived.rutinas">
+            <span class="mdl-list__item-primary-content">
+              <i class="material-icons mdl-list__item-avatar">fitness_center</i>
+              <span>{{item.nombreRutina}}</span>
+              <span class="mdl-list__item-text-body">
+                {{validateEmptyData(item.detalle)}}
+              </span>
+            </span>
+            <span class="mdl-list__item-secondary-content">
+              Tiempo total: {{item.tiempoTotal}} segundo(s)
+            </span>
+          </li>
+        </ul>
+        <span ng-if="itemObjectActived.rutinas == ''">{{itemObjectActived.nombre}} no tiene rutinas ligadas...</span>
       </div>
     </div>
-  </div>
-</div>
-<!-- End Details Card -->
-
-
-<!-- Update / Remove Card -->
-<div ng-show="formOpt" class="jn-content-div jn-card-wide mdl-card mdl-shadow--2dp">
-  <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text">Usuario</h2>
-  </div>
-  <div class="mdl-card__supporting-text">
-    <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--6-col">
-        <span><strong>Nombre:</strong></span>
-      </div>
-      <div class="mdl-cell mdl-cell--6-col">
-        <input class="mdl-textfield__input" type="text" ng-model="itemActivated.nombre">
-      </div>
-    </div>
-    <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--6-col">
-        <span><strong>Apellidos:</strong></span>
-      </div>
-      <div class="mdl-cell mdl-cell--6-col">
-        <input class="mdl-textfield__input" type="text" ng-model="itemActivated.apellidos">
-      </div>
-    </div>
-    <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--6-col">
-        <span><strong>Correo:</strong></span>
-      </div>
-      <div class="mdl-cell mdl-cell--6-col">
-        <input class="mdl-textfield__input" type="text" ng-model="itemActivated.correo">
-      </div>
-    </div>
-    <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--6-col">
-        <span><strong>Fecha Nacimiento (MM/dd/YYYY):</strong></span>
-      </div>
-      <div class="mdl-cell mdl-cell--6-col">
-        <input class="mdl-textfield__input" type="text" ng-model="itemActivated.fechaNacimiento">
-      </div>
-    </div>
-    <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--6-col">
-        <span><strong>Genero:</strong></span>
-      </div>
-      <div class="mdl-cell mdl-cell--6-col">
-        <input class="mdl-textfield__input" type="text" ng-model="itemActivated.genero">
-      </div>
-    </div>
-    <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--6-col">
-        <span><strong>Foto:</strong></span>
-      </div>
-      <div class="mdl-cell mdl-cell--6-col">
-        <input class="mdl-textfield__input" type="text" ng-model="itemActivated.foto">
-      </div>
-    </div>
-  </div>
-
-  <div class="mdl-card__actions mdl-card--border">
-    <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--6-col">
-        <a ng-click="refresh()" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-          Cancelar
-        </a>
-      </div>
-      <div class="mdl-cell mdl-cell--6-col">
-        <a ng-click="confirmChanges()"class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-          Aceptar
-        </a>
-      </div>
-    </div>
-
-
-  </div>
-  <div class="mdl-card__menu">
-    <button ng-disabled="delBtnOpt" ng-click="removeItem(itemActivated._id)" id="deleteActivity" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-      <i class="material-icons">delete</i>
-    </button>
+    <!-- End Pick Up List -->
   </div>
 </div>
+<!-- End Details -->
 
-<!-- Tooltip -->
-<div class="mdl-tooltip" for="deleteActivity">
-  Remover
+<!-- Update / Remove -->
+<div ng-show="formOpt" class="mdl-grid">
+  <div class="mdl-cell mdl-cell--6-col">
+    <!-- Update / Remove Card -->
+    <div  class="jn-content-div jn-card-wide mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Usuario</h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--6-col">
+            <span><strong>Nombre:</strong></span>
+          </div>
+          <div class="mdl-cell mdl-cell--6-col">
+            <input class="mdl-textfield__input" type="text" ng-model="itemObjectActived.nombre">
+          </div>
+        </div>
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--6-col">
+            <span><strong>Apellidos:</strong></span>
+          </div>
+          <div class="mdl-cell mdl-cell--6-col">
+            <input class="mdl-textfield__input" type="text" ng-model="itemObjectActived.apellidos">
+          </div>
+        </div>
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--6-col">
+            <span><strong>Correo:</strong></span>
+          </div>
+          <div class="mdl-cell mdl-cell--6-col">
+            <input class="mdl-textfield__input" type="text" ng-model="itemObjectActived.correo">
+          </div>
+        </div>
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--6-col">
+            <span><strong>Fecha Nacimiento (MM/dd/YYYY):</strong></span>
+          </div>
+          <div class="mdl-cell mdl-cell--6-col">
+            <input class="mdl-textfield__input" type="text" ng-model="itemObjectActived.fechaNacimiento">
+          </div>
+        </div>
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--6-col">
+            <span><strong>Genero:</strong></span>
+          </div>
+          <div class="mdl-cell mdl-cell--6-col">
+            <input class="mdl-textfield__input" type="text" ng-model="itemObjectActived.genero">
+          </div>
+        </div>
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--6-col">
+            <span><strong>Foto:</strong></span>
+          </div>
+          <div class="mdl-cell mdl-cell--6-col">
+            <input class="mdl-textfield__input" type="text" ng-model="itemObjectActived.foto">
+          </div>
+        </div>
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--6-col">
+            <a ng-click="refresh()" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              Cancelar
+            </a>
+          </div>
+          <div class="mdl-cell mdl-cell--6-col">
+            <a ng-click="confirmChanges()"class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              Aceptar
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="mdl-card__menu">
+        <button ng-disabled="delBtnOpt" ng-click="removeItem(itemObjectActived._id)" id="deleteActivity" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">delete</i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Tooltip -->
+    <div class="mdl-tooltip" for="deleteActivity">
+      Remover
+    </div>
+    <!-- End Update / Remove Card -->
+  </div>
+  <div class="mdl-cell mdl-cell--6-col">
+    <!-- Pick Up List -->
+    <div class="jn-content-div jn-card-wide mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title mdl-card--expand">
+        <h2 class="mdl-card__title-text">Modificar rutinas de {{itemObjectActived.nombre}}</h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+        <div class="mdl-card__actions mdl-card--border">
+          <!-- Select / PickList -->
+          <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--4-col">
+              <span><strong>Añadir rutina:</strong></span>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col">
+                <select ng-model="itemListSelected" name="S" class="mdl-selectfield__select"
+                        ng-options="item.nombreRutina for item in itemsList">
+                </select>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col">
+              <button class="mdl-button" ng-click="addListItem()">
+                <i class="material-icons">add</i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+        </div>
+        <ul class="demo-list-three mdl-list" ng-show="itemObjectActived.rutinas">
+          <li class="mdl-list__item mdl-list__item--three-line" ng-repeat="item in itemObjectActived.rutinas">
+            <span class="mdl-list__item-primary-content">
+              <i class="material-icons mdl-list__item-avatar">fitness_center</i>
+              <span>{{item.nombreRutina}}</span>
+              <span class="mdl-list__item-text-body">
+                {{validateEmptyData(item.detalle)}}
+              </span>
+            </span>
+            <span class="mdl-list__item-secondary-content">
+              <a class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" href=""
+              ng-click="removeListItem(item)"><i class="material-icons">delete</i></a>
+            </span>
+          </li>
+        </ul>
+        <span ng-if="itemObjectActived.rutinas == ''">{{itemObjectActived.nombre}} no tiene rutinas ligadas...</span>
+      </div>
+    </div>
+    <!-- End Pick Up List -->
+  </div>
 </div>
-<!-- End Update / Remove Card -->
+<!-- End Update / Remove -->
+
 
 <!-- Datatable -->
 <div class="jn-content-div mdl-color--white mdl-shadow--2dp">

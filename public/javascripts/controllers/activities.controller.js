@@ -20,7 +20,7 @@ angular.module("softtechApp")
     $scope.formDetailsOpt = false;
     $scope.addBtnOpt = true;
     $scope.delBtnOpt = false;
-    $scope.itemActivated = {};
+    $scope.itemObjectActived = {};
 
     // Get Data from server
     $http.get('/v1/activities').then(function(response){
@@ -31,7 +31,7 @@ angular.module("softtechApp")
   // Activate Form to modify or add data
   $scope.formActivate = function(item){
     if(item != null){ // Update
-      $scope.itemActivated = item;
+      $scope.itemObjectActived = item;
     }else{ // Insert
       $scope.delBtnOpt = true;
     }
@@ -42,7 +42,7 @@ angular.module("softtechApp")
 
   // Activate Form to modify or add data
   $scope.formDetailsActivate = function(item){
-    $scope.itemActivated = item;
+    $scope.itemObjectActived = item;
     $scope.formDetailsOpt = true;
     $scope.addBtnOpt = false;
     $scope.tablBtnsOpt = true;
@@ -78,11 +78,11 @@ angular.module("softtechApp")
   // Add a new Item
   $scope.addNewItem = function(){
     var data = {
-      nombreActividad : softechUtil.validateEmptyData($scope.itemActivated.nombreActividad),
-      detalle : softechUtil.validateEmptyData($scope.itemActivated.detalle),
-      duracion : softechUtil.validateDataNumber($scope.itemActivated.duracion),
-      repeticiones : softechUtil.validateDataNumber($scope.itemActivated.repeticiones),
-      peso : softechUtil.validateDataNumber($scope.itemActivated.peso)
+      nombreActividad : softechUtil.validateEmptyData($scope.itemObjectActived.nombreActividad),
+      detalle : softechUtil.validateEmptyData($scope.itemObjectActived.detalle),
+      duracion : softechUtil.validateDataNumber($scope.itemObjectActived.duracion),
+      repeticiones : softechUtil.validateDataNumber($scope.itemObjectActived.repeticiones),
+      peso : softechUtil.validateDataNumber($scope.itemObjectActived.peso)
     };
     $http.post('/v1/activities/', data).then(function(response){
         Notification.success({title:'Exitoso', message:'Ingresado exitosamente!'});
@@ -103,13 +103,13 @@ angular.module("softtechApp")
   // Modify an existing item
   $scope.updateItem = function(){
     var data = {
-      nombreActividad : softechUtil.validateEmptyData($scope.itemActivated.nombreActividad),
-      detalle : softechUtil.validateEmptyData($scope.itemActivated.detalle),
-      duracion : softechUtil.validateDataNumber($scope.itemActivated.duracion),
-      repeticiones : softechUtil.validateDataNumber($scope.itemActivated.repeticiones),
-      peso : softechUtil.validateDataNumber($scope.itemActivated.peso)
+      nombreActividad : softechUtil.validateEmptyData($scope.itemObjectActived.nombreActividad),
+      detalle : softechUtil.validateEmptyData($scope.itemObjectActived.detalle),
+      duracion : softechUtil.validateDataNumber($scope.itemObjectActived.duracion),
+      repeticiones : softechUtil.validateDataNumber($scope.itemObjectActived.repeticiones),
+      peso : softechUtil.validateDataNumber($scope.itemObjectActived.peso)
     };
-    $http.put('/v1/activities/'+$scope.itemActivated._id, data).then(function(response){
+    $http.put('/v1/activities/'+$scope.itemObjectActived._id, data).then(function(response){
         Notification.success({title:'Exitoso', message:'Modificado exitosamente!'});
         $scope.refresh();
     }, function(error){
