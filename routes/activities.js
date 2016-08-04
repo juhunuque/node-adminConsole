@@ -2,16 +2,17 @@
 var express = require('express');
 var router = express.Router();
 let controller = require('./../app/controllers/activity.controller');
+let security = require('./../app/controllers/security.controller');
 
 
-router.get('/', controller.getAll);
+router.get('/', security.isAuthenticated, controller.getAll);
 
-router.get('/:id', controller.getOneById);
+router.get('/:id', security.isAuthenticated, controller.getOneById);
 
-router.post('/', controller.createObject);
+router.post('/', security.isAuthenticated, controller.createObject);
 
-router.delete('/:id', controller.removeObject);
+router.delete('/:id', security.isAuthenticated, controller.removeObject);
 
-router.put('/:id', controller.updateObject);
+router.put('/:id', security.isAuthenticated, controller.updateObject);
 
 module.exports = router;

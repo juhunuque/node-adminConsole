@@ -32,6 +32,7 @@ var routes = require('./routes/index');
 var activities = require('./routes/activities');
 var routines = require('./routes/routines');
 var users = require('./routes/users');
+var security = require('./routes/security');
 
 var app = express();
 
@@ -125,6 +126,7 @@ app.use('/v1', routes);
 app.use('/v1/activities', activities);
 app.use('/v1/routines', routines);
 app.use('/v1/users', users);
+app.use('/v1/security', security);
 
 // Swagger Route
 const swaggerApi = require('./app/config/swaggerApi.json');
