@@ -43,9 +43,9 @@ function evaluateFbToken(token){
 // Create an app token (JWT) if the FB token is valid
 function createAppToken(user){
   var payload = {
-    sub: user._id,
+    sub: user,
     iat: moment().unix(),
-    exp: moment().add(14, "days").unix(),
+    exp: moment().add(1, "days").unix(),
   };
   return jwt.encode(payload, config.TOKEN_SECRET);
 }
@@ -58,7 +58,7 @@ function isAuthenticated(req, res, next){
   var payload = jwt.decode(token, config.TOKEN_SECRET);
 
   if(payload.exp <= moment().unix()) {return next(new CustomError('Token expired',401))}
-  
+
   next();
 }
 
