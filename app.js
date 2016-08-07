@@ -14,7 +14,7 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var db = mongoose.connection;
 
-var mongoConfig = require('./app/config/mongoConfig.json');
+var mongoConfig = require('./app/config/internalConfigs').mongo;
 const mongoUrl = mongoConfig.host + ':' + mongoConfig.port + '/' + mongoConfig.dbName;
 mongoose.connect(mongoUrl);
 

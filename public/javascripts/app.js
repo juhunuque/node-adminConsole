@@ -1,11 +1,20 @@
 'use strict';
-var app = angular.module('softtechApp',['ngRoute','ngAnimate','datatables','ngAnimate','ui-notification']);
+var app = angular.module('softtechApp',['ngRoute','ngAnimate','datatables','ngAnimate','ui-notification','satellizer']);
 
-app.config(['$routeProvider', ($routeProvider)=>{
+app.config(['$routeProvider', '$authProvider', ($routeProvider, $authProvider)=>{
+  $authProvider.httpInterceptor = function() { return true; },
+  $authProvider.withCredentials = false;
+
+    $authProvider.facebook({
+      clientId: '2086094091615811',
+      responseType: 'token'
+    });
+
   $routeProvider
   .when('/users',{
     templateUrl: 'views/users.view.html',
-    controller: 'UsersCtrl'
+    controller: 'UsersCtrl',
+    data: {requiredLogin: true}
   })
   .when('/home',{
     templateUrl: 'views/home.view.html',
@@ -19,9 +28,17 @@ app.config(['$routeProvider', ($routeProvider)=>{
     templateUrl: 'views/activities.view.html',
     controller: 'ActivitiesCtrl'
   })
-  .when('/access',{
-    templateUrl: 'views/access.view.html',
-    controller: 'AccessCtrl'
+  .when('/login',{
+    templateUrl: 'views/login.view.html',
+    controller: 'LoginCtrl'
   })
   .otherwise({redirectTo: 'home'})
 }]);
+
+app.run(function ($rootScope, $location, $dataFactory, Notification) {
+  $rootScope.$on('$routeChangeStart', function(event, next, current) {
+      if (!$dataFactory.isLogged()){
+        $location.url('/login');
+      }
+    });
+  });

@@ -3,14 +3,14 @@ var request = require('request');
 var jwt = require('jwt-simple');
 var moment = require('moment');
 var config = require('./../config/configSecret');
-var CustomError = require('./../utils/custom-error');
+let CustomError = require('./../utils/custom-error');
 
 // Login, returns an app token
 function loginProcess(req, res, next){
   if(!req.body.token){return next(new CustomError('Server needs mandatory a token',400))}
 
   evaluateFbToken(req.body.token).then((data)=>{
-    res.status(200).json({appToken: createAppToken(data.email)});
+    res.status(200).json({appToken: createAppToken(data.email),email: data.email, name: data.name, picture: data.picture});
   },(error)=>{
     return next(new CustomError(error.message,error.status))
   })
@@ -20,15 +20,20 @@ function loginProcess(req, res, next){
 // Evaluate if the token is a FB valid token
 function evaluateFbToken(token){
   return new Promise((resolve, reject)=>{
-    const fbCheckUrl = "https://graph.facebook.com/me?access_token="+token;
+    const fbCheckUrl = "https://graph.facebook.com/me?access_token="+token+'&fields=email,picture,name';
     request(fbCheckUrl, function (error, response, body) {
       if(error){reject({
         message: 'Error validating the token',
         status: 500
       })}
       if(response.statusCode===200){
+        const bodyFb = JSON.parse(body);
+        const picture = bodyFb.picture.data.url || '';
         resolve({
-          email: JSON.parse(body).email
+          id: bodyFb.id,
+          email: bodyFb.email,
+          name: bodyFb.name,
+          picture: picture
         });
       }else{
         reject({
@@ -61,6 +66,9 @@ function isAuthenticated(req, res, next){
 
   next();
 }
+
+
+
 
 module.exports = {
     loginProcess: loginProcess,
