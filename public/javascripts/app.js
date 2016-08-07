@@ -1,7 +1,6 @@
-'use strict';
 var app = angular.module('softtechApp',['ngRoute','ngAnimate','datatables','ngAnimate','ui-notification','satellizer']);
 
-app.config(['$routeProvider', '$authProvider', '$httpProvider',($routeProvider, $authProvider, $httpProvider)=>{
+app.config(['$routeProvider', '$authProvider', '$httpProvider',function($routeProvider, $authProvider, $httpProvider){
     // Adding interceptor for Headers
     $httpProvider.interceptors.push('authInterceptor');
 

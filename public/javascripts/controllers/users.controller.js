@@ -1,7 +1,6 @@
-'user strict'
 angular.module("softtechApp")
 
-.controller('UsersCtrl',['$scope','$http', '$dataFactory', 'DTOptionsBuilder', 'Notification','$filter',($scope, $http, $dataFactory, DTOptionsBuilder, Notification,$filter)=>{
+.controller('UsersCtrl',['$scope','$http', '$dataFactory', 'DTOptionsBuilder', 'Notification','$filter',function($scope, $http, $dataFactory, DTOptionsBuilder, Notification,$filter){
   $dataFactory.menuActive = "Usuarios";
 
   // DataTables configurable options
@@ -157,7 +156,7 @@ angular.module("softtechApp")
 
   // Remove an item from routines array
   $scope.removeListItem = function(item){
-        let i = $scope.itemObjectActived.rutinas.indexOf(item);
+        var i = $scope.itemObjectActived.rutinas.indexOf(item);
         if(i != -1) {
             $scope.itemObjectActived.rutinas.splice(i, 1);
         }

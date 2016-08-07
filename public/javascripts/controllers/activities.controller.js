@@ -1,7 +1,7 @@
 'user strict'
 angular.module("softtechApp")
 
-.controller('ActivitiesCtrl',['$scope','$http', '$dataFactory', 'DTOptionsBuilder', 'Notification',($scope, $http, $dataFactory, DTOptionsBuilder, Notification)=>{
+.controller('ActivitiesCtrl',['$scope','$http', '$dataFactory', 'DTOptionsBuilder', 'Notification',function($scope, $http, $dataFactory, DTOptionsBuilder, Notification){
   $dataFactory.menuActive = "Actividades";
 
   // DataTables configurable options

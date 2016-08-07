@@ -1,7 +1,6 @@
-'user strict'
 angular.module("softtechApp")
 
-.controller('MenuCtrl',['$scope', '$dataFactory', '$auth', '$http', 'Notification', '$location',($scope, $dataFactory, $auth, $http, Notification, $location)=>{
+.controller('MenuCtrl',['$scope', '$dataFactory', '$auth', '$http', 'Notification', '$location',function($scope, $dataFactory, $auth, $http, Notification, $location){
 
   function refresh(){
     $scope.title = $dataFactory.menuActive;
@@ -16,16 +15,16 @@ angular.module("softtechApp")
     }
   }
 
-  $scope.$watch(()=>{
+  $scope.$watch(function(){
     return $dataFactory.menuActive;
-  },()=>{
+  },function(){
     refresh();
     return;
   });
 
   // Functions
-  $scope.login = ()=>{
-    $auth.authenticate('facebook').then((response)=>{
+  $scope.login = function(){
+    $auth.authenticate('facebook').then(function(response){
       var data = {
         token: response.access_token
       };
@@ -38,14 +37,14 @@ angular.module("softtechApp")
         console.log('Error: ' + error.data.message);
         refresh();
       });
-    },(error)=>{
+    },function(error){
       Notification.error({title:'Error', message:'Ocurrio un error con su login!'});
       console.error(error);
       refresh();
     });
   };
 
-  $scope.logout = ()=>{
+  $scope.logout = function(){
     $dataFactory.logout();
     refresh();
     Notification.info({title:'Info', message:'Hasta pronto!'});

@@ -1,15 +1,14 @@
-'use strict';
 angular.module('softtechApp')
 
 .factory('$dataFactory',function(){
 
     var menuActive = {};
-    const baseUrl = 'http://127.0.0.1:3000';
+    var baseUrl = 'http://127.0.0.1:3000';
 
-    var setLogin = (item)=>{sessionStorage.setItem('loginApp',JSON.stringify(item))};
-    var getLogin = ()=>{return JSON.parse(sessionStorage.getItem('loginApp'))};
-    var logout = ()=>{sessionStorage.clear()};
-    var isLogged = ()=>{
+    var setLogin = function(item){sessionStorage.setItem('loginApp',JSON.stringify(item))};
+    var getLogin = function(){return JSON.parse(sessionStorage.getItem('loginApp'))};
+    var logout = function(){sessionStorage.clear()};
+    var isLogged = function(){
       if(sessionStorage.getItem('loginApp')){
         return true;
       }else{
