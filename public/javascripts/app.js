@@ -1,10 +1,11 @@
 'use strict';
 var app = angular.module('softtechApp',['ngRoute','ngAnimate','datatables','ngAnimate','ui-notification','satellizer']);
 
-app.config(['$routeProvider', '$authProvider', ($routeProvider, $authProvider)=>{
-  $authProvider.httpInterceptor = function() { return true; },
-  $authProvider.withCredentials = false;
+app.config(['$routeProvider', '$authProvider', '$httpProvider',($routeProvider, $authProvider, $httpProvider)=>{
+    // Adding interceptor for Headers
+    $httpProvider.interceptors.push('authInterceptor');
 
+    // Auth FB config
     $authProvider.facebook({
       clientId: '2086094091615811',
       responseType: 'token'

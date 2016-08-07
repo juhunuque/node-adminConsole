@@ -43,4 +43,17 @@ angular.module('softtechApp')
     };
 
     return svc;
-});
+})
+
+.factory('authInterceptor', function($location, $q, $window, $dataFactory) {
+
+return {
+    request: function(config) {
+      config.headers = config.headers || {};
+      if($dataFactory.isLogged()){
+        config.headers.Authorization = 'Bearer '+$dataFactory.getLogin().appToken;
+      }
+      return config;
+    }
+  };
+})
