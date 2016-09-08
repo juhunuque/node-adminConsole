@@ -3,5 +3,13 @@
     "host":"mongodb://localhost",
     "port":"27017",
     "dbName":"rawFitness"
+
+  },
+  "defaultAdmin":{
+    "name": "Softech",
+    "lastname": "Admin",
+    "email": "adminRaw@softechfactory.com",
+    "password": "Em5qerZ##$Z%cYgs",
+    "type": "admin"
   }
 }

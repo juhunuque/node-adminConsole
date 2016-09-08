@@ -143,6 +143,22 @@
         </div>
         <div class="mdl-grid">
           <div class="mdl-cell mdl-cell--6-col">
+            <span><strong>Password:</strong></span>
+          </div>
+          <div class="mdl-cell mdl-cell--6-col">
+            <input class="mdl-textfield__input" type="text" ng-model="itemObjectActived.password" ng-disabled="!delBtnOpt">
+          </div>
+        </div>
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--6-col">
+            <span><strong>Administrador:</strong></span>
+          </div>
+          <div class="mdl-cell mdl-cell--4-col">
+              <input type="checkbox"  ng-checked="itemObjectActived.isAdmin" ng-model="itemObjectActived.isAdmin" />
+          </div>
+        </div>
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--6-col">
             <span><strong>Fecha Nacimiento (MM/dd/YYYY):</strong></span>
           </div>
           <div class="mdl-cell mdl-cell--6-col">
@@ -183,6 +199,9 @@
       <div class="mdl-card__menu">
         <button ng-disabled="delBtnOpt" ng-click="removeItem(itemObjectActived._id)" id="deleteActivity" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
           <i class="material-icons">delete</i>
+        </button>
+        <button ng-disabled="delBtnOpt" ng-click="resetPassword(itemObjectActived)"  class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">autorenew</i>
         </button>
       </div>
     </div>

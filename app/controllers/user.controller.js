@@ -43,16 +43,25 @@ function createObject(req, res, next){
     nombre: req.body.nombre,
     apellidos: req.body.apellidos,
     correo: req.body.correo,
+    password: req.body.password,
+    tipo: req.body.tipo,
     fechaNacimiento: req.body.fechaNacimiento,
     genero: req.body.genero,
     foto: req.body.foto,
     rutinas: req.body.rutinas
   });
 
-  Model.createObject(newObject, next, (err, object)=>{
+  // Check if the user already exists
+  Model.getByEmail(newObject.correo,(err, object)=>{
     if(err){return next(err);}
+    if(object){return next(new CustomError('User already exists', 400));}
 
-    res.status(200).json(object);
+    // If the user does not exist, create a new one
+    Model.createObject(newObject, next, (err, object)=>{
+      if(err){return next(err);}
+
+      res.status(200).json(object);
+    });
   });
 };
 
@@ -74,9 +83,11 @@ function updateObject(req, res, next){
     nombre: req.body.nombre,
     apellidos: req.body.apellidos,
     correo: req.body.correo,
+    tipo: req.body.tipo,
     fechaNacimiento: req.body.fechaNacimiento,
     genero: req.body.genero,
     foto: req.body.foto,
+    password: req.body.password,
     rutinas: req.body.rutinas
   };
 

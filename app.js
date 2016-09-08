@@ -115,8 +115,6 @@ if(app.get('env') === 'development'){
 }
 // End Log Structure
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -170,5 +168,8 @@ app.use(function(err, req, res, next) {
   res.json({message: err.message, error: {}});
 });
 
+//Init Script
+const initScript = require('./app/utils/init_script');
+//End Init Script
 
 module.exports = app;

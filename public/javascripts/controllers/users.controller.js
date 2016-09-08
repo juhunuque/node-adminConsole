@@ -39,7 +39,8 @@ angular.module("softtechApp")
       $scope.itemObjectActived = item;
       const dateAux = $filter('date')(item.fechaNacimiento, "MM/dd/yyyy");
       $scope.itemObjectActived.fechaNacimiento = dateAux;
-      //$scope.itemsList = softechUtil.getArrayWithoutDuplicates( $scope.itemsList,$scope.itemObjectActived.rutinas );
+      $scope.itemObjectActived.password = '';
+      $scope.itemObjectActived.isAdmin = $scope.itemObjectActived.tipo === 'admin' ? true : false;
     }else{ // Insert
       $scope.delBtnOpt = true;
     }
@@ -91,11 +92,14 @@ angular.module("softtechApp")
       nombre: softechUtil.validateEmptyData($scope.itemObjectActived.nombre),
       apellidos: softechUtil.validateEmptyData($scope.itemObjectActived.apellidos),
       correo: softechUtil.validateEmptyData($scope.itemObjectActived.correo),
+      password: softechUtil.validateEmptyData($scope.itemObjectActived.password),
+      tipo: $scope.itemObjectActived.isAdmin ? 'admin' : 'user',
       fechaNacimiento: softechUtil.validateEmptyData($scope.itemObjectActived.fechaNacimiento),
       genero: softechUtil.validateEmptyData($scope.itemObjectActived.genero),
       foto: softechUtil.validateEmptyData($scope.itemObjectActived.foto),
       rutinas: $scope.itemObjectActived.rutinas
     };
+
     $http.post('/v1/users/', data).then(function(response){
         Notification.success({title:'Exitoso', message:'Ingresado exitosamente!'});
         $scope.refresh();
@@ -118,11 +122,13 @@ angular.module("softtechApp")
       nombre: softechUtil.validateEmptyData($scope.itemObjectActived.nombre),
       apellidos: softechUtil.validateEmptyData($scope.itemObjectActived.apellidos),
       correo: softechUtil.validateEmptyData($scope.itemObjectActived.correo),
+      tipo: $scope.itemObjectActived.isAdmin ? 'admin' : 'user',
       fechaNacimiento: softechUtil.validateEmptyData($scope.itemObjectActived.fechaNacimiento),
       genero: softechUtil.validateEmptyData($scope.itemObjectActived.genero),
       foto: softechUtil.validateEmptyData($scope.itemObjectActived.foto),
       rutinas:$scope.itemObjectActived.rutinas
     };
+
     $http.put('/v1/users/'+$scope.itemObjectActived._id, data).then(function(response){
         Notification.success({title:'Exitoso', message:'Modificado exitosamente!'});
         $scope.refresh();
@@ -154,6 +160,23 @@ angular.module("softtechApp")
     $scope.itemListSelected = {};
   };
 
+  $scope.resetPassword = function(item){
+    $http.put('/v1/security/resetpwd/'+item._id).then(function(response){
+        Notification.success({title:'Exitoso', message:'Password reiniciado!'});
+        $scope.refresh();
+    }, function(error){
+      if(error.status === 400){
+        Notification.error({title:'Error', message:'Por favor verifique sus datos y vuelva a intentarlo!'});
+      }else if(error.status === 500){
+        Notification.error({title:'Error', message:'Ocurrio un error en el servidor, intentelo mas tarde!'});
+      }else{
+        Notification.error({title:'Error', message:'Error desconocido, refresque la pagina y vuelva a intentarlo!'});
+      }
+      console.log('Error: ' + error.data.message);
+      $scope.refresh();
+    });
+  };
+
   // Remove an item from routines array
   $scope.removeListItem = function(item){
         var i = $scope.itemObjectActived.rutinas.indexOf(item);
@@ -161,5 +184,6 @@ angular.module("softtechApp")
             $scope.itemObjectActived.rutinas.splice(i, 1);
         }
     }
+
   $scope.refresh();
 }]);

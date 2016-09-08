@@ -4,7 +4,6 @@ var router = express.Router();
 let controller = require('./../app/controllers/user.controller');
 let security = require('./../app/controllers/security.controller');
 
-
 router.get('/', security.isAuthenticated, controller.getAll);
 
 router.get('/:id', security.isAuthenticated, controller.getOneById);

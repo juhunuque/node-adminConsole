@@ -4,13 +4,21 @@ var jwt = require('jwt-simple');
 var moment = require('moment');
 var config = require('./../config/configSecret');
 let CustomError = require('./../utils/custom-error');
+var User = require('./../models/user.model');
+var bcrypt = require('bcrypt');
 
-// Login, returns an app token
-function loginProcess(req, res, next){
+// Login using Facebook process, returns an app token
+function loginFbProcess(req, res, next){
   if(!req.body.token){return next(new CustomError('Server needs mandatory a token',400))}
 
   evaluateFbToken(req.body.token).then((data)=>{
-    res.status(200).json({appToken: createAppToken(data.email),email: data.email, name: data.name, picture: data.picture});
+    res.status(200).json(
+      {appToken: createAppToken(data.email),
+        email: data.email,
+        name: data.name,
+        type: data.type,
+        picture: data.picture
+      });
   },(error)=>{
     return next(new CustomError(error.message,error.status))
   })
@@ -29,12 +37,25 @@ function evaluateFbToken(token){
       if(response.statusCode===200){
         const bodyFb = JSON.parse(body);
         const picture = bodyFb.picture.data.url || '';
-        resolve({
-          id: bodyFb.id,
-          email: bodyFb.email,
-          name: bodyFb.name,
-          picture: picture
+
+        User.getByEmail(bodyFb.email,(err, object)=>{
+          if(err){reject(err);}
+          if(!object){
+            reject({
+              message: 'Not authorized: User not registered',
+              status: 401
+              });
+            }
+
+            resolve({
+              id: bodyFb.id,
+              email: bodyFb.email,
+              name: bodyFb.name,
+              type: object.tipo,
+              picture: picture
+            });
         });
+
       }else{
         reject({
           message: 'Not authorized: ' + JSON.parse(body).error.message,
@@ -42,6 +63,45 @@ function evaluateFbToken(token){
           });
       }
     })
+  })
+}
+
+// Login using credentials process, returns an app token
+function loginProcess(req, res, next){
+  if(!req.body.email || !req.body.password){return next(new CustomError('Server needs mandatory the user email and password',400))}
+
+  evaluateUserCredentials(req.body.email, req.body.password).then((data)=>{
+    res.status(200).json({
+      appToken: createAppToken(data.email),
+      email: data.email,
+      name: data.name,
+      type: data.type,
+      picture: data.picture
+    });
+  },(error)=>{
+    return next(new CustomError(error.message,error.status))
+  })
+}
+
+// Evaluate if the user exists and the password is correct
+function evaluateUserCredentials(email, password){
+  return new Promise((resolve, reject) =>{
+    User.getByEmail(email,(err, object)=>{
+      if(err){reject(err);}
+      if(!object){reject(new CustomError('No data found', 400));}
+
+      bcrypt.compare(password, object.password, function(err, isMatch) {
+          if (err){return reject(err);}
+          if (!isMatch){reject(new CustomError('Password invalid', 400));}
+
+          resolve({
+            email: object.correo,
+            name: `${object.nombre} ${object.apellidos}`,
+            type: object.tipo,
+            picture: object.foto
+          });
+      });
+    });
   })
 }
 
@@ -67,10 +127,37 @@ function isAuthenticated(req, res, next){
   next();
 }
 
+// When the password has been restarted, invoke this method in order to update a new one
+function updatePassword(req, res, next){
+  const data = new User({
+    password: req.body.password,
+  });
 
+  User.updatePassword(req.params.id, data, next, (err, object)=>{
+    if(err){return next(err);}
+
+    res.status(200).json({'message': 'Password updated successfully'});
+  })
+}
+
+// Reset a user password
+function resetPassword(req, res, next){
+  const data = new User({
+    password: '',
+  });
+
+  User.updatePassword(req.params.id, data, next, (err, object)=>{
+    if(err){return next(err);}
+
+    res.status(200).json({'message': 'Password restarted successfully'});
+  })
+}
 
 
 module.exports = {
+    loginFbProcess: loginFbProcess,
     loginProcess: loginProcess,
+    updatePassword: updatePassword,
+    resetPassword: resetPassword,
     isAuthenticated: isAuthenticated
 };

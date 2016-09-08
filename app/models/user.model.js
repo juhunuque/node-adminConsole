@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var bcrypt = require('bcrypt');
+var SALT_WORK_FACTOR = 10;
 
 var userSchema = mongoose.Schema({
   nombre:{
@@ -12,7 +14,7 @@ var userSchema = mongoose.Schema({
   correo:{
     type: String,
     required: true,
-    default: ""
+    default: ''
   },
   fechaNacimiento:{
     type: Date
@@ -23,10 +25,37 @@ var userSchema = mongoose.Schema({
   foto:{
     type: String
   },
+  password:{
+    type: String,
+    default: ''
+  },
+  tipo:{
+    type: String,
+    default: 'user'
+  },
   rutinas:[{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Routine"
   }]
+});
+
+// Middleware to encrypt the incoming password
+userSchema.pre('save', function(next) {
+    var user = this;
+
+    if (!user.isModified('password')) return next();
+    if (!user.password) return next();
+
+    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+        if (err) return next(err);
+
+        bcrypt.hash(user.password, salt, function(err, hash) {
+            if (err) return next(err);
+
+            user.password = hash;
+            next();
+        });
+    });
 });
 
 var User = module.exports = mongoose.model('User', userSchema);
@@ -67,7 +96,6 @@ module.exports.getByEmail = function(email, callback){
 // //Add Object
 module.exports.createObject = function(newObject, next, callback){
   newObject.save((error, newObj)=>{
-    //if(error){return error;}
     if(error){
       return next(new Error(error))
     }
@@ -96,10 +124,33 @@ module.exports.updateObject = function(id, data, next, callback){
       obj.nombre = data.nombre;
       obj.apellidos = data.apellidos;
       obj.correo = data.correo;
+      obj.tipo = data.tipo;
       obj.fechaNacimiento = data.fechaNacimiento;
       obj.genero = data.genero;
       obj.foto = data.foto;
       obj.rutinas = data.rutinas;
+
+      obj.save((error, newObj)=>{
+        if(error){return next(err);}
+
+        User.findById(newObj.id, callback)
+        .populate({
+          path: 'rutinas',
+          populate:{
+            path: 'actividades'
+          }
+        });
+      });
+    }
+  });
+};
+
+module.exports.updatePassword = function(id, data, next, callback){
+  User.findById(id, function(err, obj){
+    if(!obj){
+      return next(new Error("Could not load User to update"))
+    }else{
+      obj.password = data.password;
 
       obj.save((error, newObj)=>{
         if(error){return next(err);}
