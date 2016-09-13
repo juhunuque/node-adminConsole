@@ -134,7 +134,7 @@ app.get('/api', function (req, res) {
 
 app.use(express.static(path.join(__dirname, 'swagger')));
 app.get('/apiDocs', function (req, res) {
-   res.sendFile(path.join(__dirname, './swagger', 'index.html')).end();
+   res.sendFile(path.join(__dirname, './swagger', 'index.html'));
 });
 // End swagger route
 
@@ -155,7 +155,7 @@ if (app.get('env') === 'development') {
     res.status(err.status || 500);
     console.error('Caught err: ',err);
     // winston.error(err);
-    res.json({message: err.message, error: err}).end();
+    res.json({message: err.message, error: err});
   });
 }
 
@@ -164,7 +164,7 @@ if (app.get('env') === 'development') {
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   // winston.error(err);
-  res.json({message: err.message, error: err}).end();
+  res.json({message: err.message, error: err});
 });
 
 //Init Script
