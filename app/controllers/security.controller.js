@@ -87,10 +87,15 @@ function loginProcess(req, res, next){
 function evaluateUserCredentials(email, password){
   return new Promise((resolve, reject) =>{
     User.getByEmail(email,(err, object)=>{
-      if(err){reject(err);}
-      if(!object){reject(new CustomError('No data found', 400));}
+        if(err){reject(err);}
+        if(!object){
+          reject({
+            message: 'Not authorized: User not registered',
+            status: 401
+          });
+        }
 
-      bcrypt.compare(password, object.password, function(err, isMatch) {
+  bcrypt.compare(password, object.password, function(err, isMatch) {
           if (err){return reject(err);}
           if (!isMatch){reject(new CustomError('Password invalid', 400));}
 
