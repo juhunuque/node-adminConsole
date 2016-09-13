@@ -37,70 +37,70 @@ var security = require('./routes/security');
 var app = express();
 
 // Log Structure
-var logsDirectory = path.join(__dirname, 'logs');
-fs.existsSync(logsDirectory) || fs.mkdirSync(logsDirectory);
-var logDirectory = path.join(__dirname, 'logs/log');
-fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
-
+// var logsDirectory = path.join(__dirname, 'logs');
+// fs.existsSync(logsDirectory) || fs.mkdirSync(logsDirectory);
+// var logDirectory = path.join(__dirname, 'logs/log');
+// fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+//
 var winston = new winston.Logger({
     transports: [
-        new (require('winston-daily-rotate-file'))({
-            filename: 'console.log',
-            dirname: './logs',
-            colorize: true,
-            timestamp: function() {
-              var p = new Date().toString().replace(/[A-Z]{3}\+/,'+').split(/ /);
-              return( p[2]+'/'+p[1]+'/'+p[3]+':'+p[4]+' '+p[5] );
-            }
-        }),
-        new winston.transports.File({
-          filename: 'console.log',
-          dirname: './logs/log',
-          json: true,
-          maxsize: 5242880,
-          colorize: true,
-          timestamp: function() {
-            var p = new Date().toString().replace(/[A-Z]{3}\+/,'+').split(/ /);
-            return( p[2]+'/'+p[1]+'/'+p[3]+':'+p[4]+' '+p[5] );
-          }
-        })
+        // new (require('winston-daily-rotate-file'))({
+        //     filename: 'console.log',
+        //     dirname: './logs',
+        //     colorize: true,
+        //     timestamp: function() {
+        //       var p = new Date().toString().replace(/[A-Z]{3}\+/,'+').split(/ /);
+        //       return( p[2]+'/'+p[1]+'/'+p[3]+':'+p[4]+' '+p[5] );
+        //     }
+        // }),
+        // new winston.transports.File({
+        //   filename: 'console.log',
+        //   dirname: './logs/log',
+        //   json: true,
+        //   maxsize: 5242880,
+        //   colorize: true,
+        //   timestamp: function() {
+        //     var p = new Date().toString().replace(/[A-Z]{3}\+/,'+').split(/ /);
+        //     return( p[2]+'/'+p[1]+'/'+p[3]+':'+p[4]+' '+p[5] );
+        //   }
+        // })
     ],
     exceptionHandlers: [
-        new (require('winston-daily-rotate-file'))({
-          filename: 'console.log',
-          dirname: './logs',
-          colorize: true,
-          timestamp: function() {
-            var p = new Date().toString().replace(/[A-Z]{3}\+/,'+').split(/ /);
-            return( p[2]+'/'+p[1]+'/'+p[3]+':'+p[4]+' '+p[5] );
-          }
-        }),
-        new winston.transports.File({
-          filename: 'console.log',
-          dirname: './logs/log',
-          json: true,
-          maxsize: 5242880,
-          colorize: true,
-          timestamp: function() {
-            var p = new Date().toString().replace(/[A-Z]{3}\+/,'+').split(/ /);
-            return( p[2]+'/'+p[1]+'/'+p[3]+':'+p[4]+' '+p[5] );
-          }
-        })
+        // new (require('winston-daily-rotate-file'))({
+        //   filename: 'console.log',
+        //   dirname: './logs',
+        //   colorize: true,
+        //   timestamp: function() {
+        //     var p = new Date().toString().replace(/[A-Z]{3}\+/,'+').split(/ /);
+        //     return( p[2]+'/'+p[1]+'/'+p[3]+':'+p[4]+' '+p[5] );
+        //   }
+        // }),
+        // new winston.transports.File({
+        //   filename: 'console.log',
+        //   dirname: './logs/log',
+        //   json: true,
+        //   maxsize: 5242880,
+        //   colorize: true,
+        //   timestamp: function() {
+        //     var p = new Date().toString().replace(/[A-Z]{3}\+/,'+').split(/ /);
+        //     return( p[2]+'/'+p[1]+'/'+p[3]+':'+p[4]+' '+p[5] );
+        //   }
+        // })
     ],
     exitOnError: false
 });
 
-logger.token('date', function() {
-    var p = new Date().toString().replace(/[A-Z]{3}\+/,'+').split(/ /);
-    return( p[2]+'/'+p[1]+'/'+p[3]+':'+p[4]+' '+p[5] );
-});
+// logger.token('date', function() {
+//     var p = new Date().toString().replace(/[A-Z]{3}\+/,'+').split(/ /);
+//     return( p[2]+'/'+p[1]+'/'+p[3]+':'+p[4]+' '+p[5] );
+// });
 
 if(app.get('env') === 'development'){
   app.use(logger('dev',{
     stream:{
       write: function(str){
         console.log(str);
-        winston.info(str);
+        // winston.info(str);
       }
     }
   }));
@@ -108,7 +108,7 @@ if(app.get('env') === 'development'){
   app.use(logger('common',{
     stream:{
       write: function(str){
-        winston.info(str);
+        // winston.info(str);
       }
     }
   }))
@@ -134,7 +134,7 @@ app.get('/api', function (req, res) {
 
 app.use(express.static(path.join(__dirname, 'swagger')));
 app.get('/apiDocs', function (req, res) {
-   res.sendFile(path.join(__dirname, './swagger', 'index.html'));
+   res.sendFile(path.join(__dirname, './swagger', 'index.html')).end();
 });
 // End swagger route
 
@@ -154,8 +154,8 @@ if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     console.error('Caught err: ',err);
-    winston.error(err);
-    res.json({message: err.message, error: err});
+    // winston.error(err);
+    res.json({message: err.message, error: err}).end();
   });
 }
 
@@ -163,9 +163,8 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  console.error('Caught err: ',err);
-  winston.error(err);
-  res.json({message: err.message, error: {}});
+  // winston.error(err);
+  res.json({message: err.message, error: err}).end();
 });
 
 //Init Script
